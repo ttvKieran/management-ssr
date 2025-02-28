@@ -2,7 +2,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     let currentPath = window.location.pathname;
     let navLinks = document.querySelectorAll(".menu-link");
-    console.log(navLinks);
     navLinks.forEach(link => {
         link.parentNode.classList.remove("active");
       if(link.getAttribute("href") == currentPath){
@@ -47,3 +46,19 @@ if(formSearchProduct){
     });
 }
 //End Search Product
+
+//Pagination
+const buttonPagination = document.querySelectorAll("[button-pagination]");
+if(buttonPagination.length > 0){
+    buttonPagination.forEach(button => {
+        button.addEventListener("click", () => {
+            const url = new URL(window.location.href);
+
+            const page = button.getAttribute("button-pagination");
+            url.searchParams.set("page", page);
+            window.location.href = url;
+        });
+    });
+}
+//End Pagination
+
