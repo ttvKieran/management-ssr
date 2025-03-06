@@ -21,10 +21,10 @@ block main
         h5.card-header Modify Products
         .card-body
             form(
-                action=`${prefixAdmin}/products/change-multi-status?_method=PATCH`
+                action=`${prefixAdmin}/products/change-multi?_method=PATCH`
                 method="POST"
                 class="row align-items-center"
-                id="form-change-multi-status"
+                id="form-change-multi"
             )
                 .col-4
                     select(
@@ -33,6 +33,7 @@ block main
                     )
                         option(value='active') ACTION
                         option(value='inactive') PENDING
+                        option(value='delete') DELETE
                     input(
                         name="ids"
                         value=""
@@ -106,13 +107,18 @@ block main
                                     button.btn.p-0.dropdown-toggle.hide-arrow(type='button' data-bs-toggle='dropdown')
                                         i.bx.bx-dots-vertical-rounded
                                     .dropdown-menu
-                                        a.dropdown-item(href='javascript:void(0);')
+                                        button(
+                                            class="dropdown-item"
+                                        )
                                             i.bx.bx-edit-alt.me-1
                                             |  Edit
-                                        a.dropdown-item(href='javascript:void(0);')
+                                        button(
+                                            class="dropdown-item"
+                                            button-delete
+                                            idItem=`${item.id}`
+                                        )
                                             i.bx.bx-trash.me-1
                                             |  Delete
-
     //- End Table product list
 
     //- Basic Pagination
@@ -127,5 +133,14 @@ block main
         path=`${prefixAdmin}/products/change-status`
     )
     //- End Form change status
+
+    //- Form delete product
+    form(
+        action
+        method="POST"
+        id="form-delete"
+        path=`${prefixAdmin}/products/delete`
+    )
+    //- End Form delete product
 
     

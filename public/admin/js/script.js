@@ -78,7 +78,7 @@ if(buttonChangeStatus.length > 0){
 }
 // End Change Status Product
 
-// Change Multi Status Product
+// Change Multi Product
     // CheckBox
 const checkBoxAll = document.querySelector("input[name='check-box-all']");
 const checkBoxItems = document.querySelectorAll("input[name='check-box-item']");
@@ -107,12 +107,13 @@ if(checkBoxAll && checkBoxItems.length > 0){
 }
     // End CheckBox
     
-    // Form Change Multi Status
-const formChangeMultiStatus = document.querySelector("#form-change-multi-status");
-if(formChangeMultiStatus){
-    formChangeMultiStatus.addEventListener("submit", (e) => {
+    // Form Change Multi 
+const formChangeMulti = document.querySelector("#form-change-multi");
+if(formChangeMulti){
+    formChangeMulti.addEventListener("submit", (e) => {
         e.preventDefault();
-        const inputIds = formChangeMultiStatus.querySelector("input[name='ids']");
+        const inputIds = formChangeMulti.querySelector("input[name='ids']");
+        const action = formChangeMulti.querySelector("select").value;
         if(checkBoxItems.length > 0){
             const ids = [];
             checkBoxItems.forEach(checkBoxItem => {
@@ -122,13 +123,33 @@ if(formChangeMultiStatus){
             });
             if(ids.length > 0){
                 inputIds.value = ids.join(", ");
-                formChangeMultiStatus.submit();
+                if(action == "delete"){
+                    const isConfirm = confirm("Are you sure you want to delete these products?");
+                    if(!isConfirm){
+                        return;
+                    }
+                }
+                formChangeMulti.submit();
             } else{
                 alert("No checkboxes selected. Please choose at least one item.");
             }
         }
     });
 }
-    // End Form Change Multi Status
-// End Change Multi Status Product
+    // End Form Change Multi 
+// End Change Multi Product
 
+// Form Delete Product
+const buttonDelete = document.querySelectorAll("[button-delete]");
+if(buttonDelete.length > 0){
+    console.log(buttonDelete);
+    const formDelete = document.querySelector("#form-delete");
+    buttonDelete.forEach(button => {
+        button.addEventListener("click", () => {
+            const idItem = button.getAttribute("idItem");
+            formDelete.action = `${formDelete.getAttribute("path")}/${idItem}?_method=DELETE`;
+            formDelete.submit();
+        });
+    });
+}
+// End Form Delete Product

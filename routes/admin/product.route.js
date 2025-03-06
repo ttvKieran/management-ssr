@@ -8,7 +8,10 @@ routes.get('/', productController.index);
 // PATCH - admin/products/change-status
 routes.patch('/change-status/:status/:id', productController.changeStatus);
 
-// PATCH - admin/products/chage-multi-status
-routes.patch('/change-multi-status', productController.changeMultiStatus);
+// PATCH - admin/products/chage-multi
+routes.patch('/change-multi', productController.changeMulti);
+
+// DELETE - admin/products/delete
+routes.delete('/delete/:id', productController.delete);
 
 module.exports = routes;

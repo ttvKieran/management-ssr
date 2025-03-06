@@ -55,7 +55,7 @@ module.exports.changeStatus = async(req, res) => {
     res.redirect('back');
 }
 
-module.exports.changeMultiStatus = async(req, res) => {
+module.exports.changeMulti = async(req, res) => {
     const action = req.body.action;
     const ids = req.body.ids.split(", ");
     switch(action){
@@ -65,9 +65,24 @@ module.exports.changeMultiStatus = async(req, res) => {
         case "inactive":
             await Product.updateMany({_id: {$in: ids}}, {status: "inactive"});
             break;
+        case "delete":
+            await Product.updateMany({_id: {$in: ids}}, {
+                deleted: true,
+                deletedAt: new Date()
+            });
+            break;
         default:
             break;
     }
+    res.redirect('back');
+}
 
+module.exports.delete = async(req, res) => {
+    const params = req.params;
+    const idProduct = params.id;
+    await Product.updateOne({_id: idProduct}, {
+        deleted: true,
+        deletedAt: new Date()
+    });
     res.redirect('back');
 }
