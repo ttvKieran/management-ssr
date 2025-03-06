@@ -7,6 +7,12 @@ const routeAdmin = require('./routes/admin/index.route');
 
 app.use(express.static('public'));
 
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.set('views', './views');
 app.set('view engine', 'pug');
 

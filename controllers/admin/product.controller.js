@@ -46,3 +46,28 @@ module.exports.index = async (req, res) => {
         pagination: paginationProduct
     });
 }
+
+module.exports.changeStatus = async(req, res) => {
+    const params = req.params;
+    const idProduct = params.id;
+    const statusProduct = params.status;
+    await Product.updateOne({_id: idProduct}, {status: statusProduct});
+    res.redirect('back');
+}
+
+module.exports.changeMultiStatus = async(req, res) => {
+    const action = req.body.action;
+    const ids = req.body.ids.split(", ");
+    switch(action){
+        case "active":
+            await Product.updateMany({_id: {$in: ids}}, {status: "active"});
+            break;
+        case "inactive":
+            await Product.updateMany({_id: {$in: ids}}, {status: "inactive"});
+            break;
+        default:
+            break;
+    }
+
+    res.redirect('back');
+}

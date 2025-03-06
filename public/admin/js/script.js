@@ -62,3 +62,73 @@ if(buttonPagination.length > 0){
 }
 //End Pagination
 
+// Change Status Product
+const buttonChangeStatus = document.querySelectorAll("[button-change-status]");
+if(buttonChangeStatus.length > 0){
+    const formChangeStatus = document.querySelector("#form-change-status");
+    buttonChangeStatus.forEach(button => {
+        button.addEventListener("click", () => {
+            const statusCurrent = button.getAttribute("statusCurrent");
+            const statusUpdate = (statusCurrent == "active") ? "inactive" : "active";
+            const idItem = button.getAttribute("idItem");
+            formChangeStatus.action = `${formChangeStatus.getAttribute("path")}/${statusUpdate}/${idItem}?_method=PATCH`;
+            formChangeStatus.submit();
+        });
+    });
+}
+// End Change Status Product
+
+// Change Multi Status Product
+    // CheckBox
+const checkBoxAll = document.querySelector("input[name='check-box-all']");
+const checkBoxItems = document.querySelectorAll("input[name='check-box-item']");
+if(checkBoxAll && checkBoxItems.length > 0){
+    checkBoxAll.addEventListener("click", () => {
+        if(checkBoxAll.checked == true){
+            checkBoxItems.forEach(checkBoxItem => {
+                checkBoxItem.checked = true;
+            }); 
+        } else{
+            checkBoxItems.forEach(checkBoxItem => {
+                checkBoxItem.checked = false;
+            }); 
+        }
+    });
+    checkBoxItems.forEach(checkBoxItem => {
+        checkBoxItem.addEventListener("click", () => {
+            const countChecked = Array.from(checkBoxItems).filter(checkBoxItem => checkBoxItem.checked).length;
+            if(countChecked == checkBoxItems.length){
+                checkBoxAll.checked = true;
+            } else{
+                checkBoxAll.checked = false;
+            }
+        });
+    });
+}
+    // End CheckBox
+    
+    // Form Change Multi Status
+const formChangeMultiStatus = document.querySelector("#form-change-multi-status");
+if(formChangeMultiStatus){
+    formChangeMultiStatus.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const inputIds = formChangeMultiStatus.querySelector("input[name='ids']");
+        if(checkBoxItems.length > 0){
+            const ids = [];
+            checkBoxItems.forEach(checkBoxItem => {
+                if(checkBoxItem.checked){
+                    ids.push(checkBoxItem.getAttribute("idItem"));
+                }
+            });
+            if(ids.length > 0){
+                inputIds.value = ids.join(", ");
+                formChangeMultiStatus.submit();
+            } else{
+                alert("No checkboxes selected. Please choose at least one item.");
+            }
+        }
+    });
+}
+    // End Form Change Multi Status
+// End Change Multi Status Product
+
