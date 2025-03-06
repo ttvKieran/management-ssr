@@ -1,12 +1,12 @@
 //Nav
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     let currentPath = window.location.pathname;
     let navLinks = document.querySelectorAll(".menu-link");
     navLinks.forEach(link => {
         link.parentNode.classList.remove("active");
-      if(link.getAttribute("href") == currentPath){
-        link.parentNode.classList.add("active");
-      }
+        if (link.getAttribute("href") == currentPath) {
+            link.parentNode.classList.add("active");
+        }
 
     });
 });
@@ -14,14 +14,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //Filter Status
 const buttonStatus = document.querySelectorAll('[button-status]');
-if(buttonStatus.length > 0){
+if (buttonStatus.length > 0) {
     const url = new URL(window.location.href);
     buttonStatus.forEach(button => {
         button.addEventListener("click", () => {
             const status = button.getAttribute("button-status");
-            if(status){
+            if (status) {
                 url.searchParams.set("status", status);
-            } else{
+            } else {
                 url.searchParams.delete("status");
             }
             window.location.href = url;
@@ -32,14 +32,14 @@ if(buttonStatus.length > 0){
 
 //Search Product
 const formSearchProduct = document.querySelector("#form-search");
-if(formSearchProduct){
+if (formSearchProduct) {
     const url = new URL(window.location.href);
     formSearchProduct.addEventListener("submit", (e) => {
         e.preventDefault();
         const keyword = e.target.elements.keyword.value;
-        if(keyword){
-            url.searchParams.set("keyword",keyword);
-        } else{
+        if (keyword) {
+            url.searchParams.set("keyword", keyword);
+        } else {
             url.searchParams.delete("keyword");
         }
         window.location.href = url;
@@ -49,7 +49,7 @@ if(formSearchProduct){
 
 //Pagination
 const buttonPagination = document.querySelectorAll("[button-pagination]");
-if(buttonPagination.length > 0){
+if (buttonPagination.length > 0) {
     buttonPagination.forEach(button => {
         button.addEventListener("click", () => {
             const url = new URL(window.location.href);
@@ -64,7 +64,7 @@ if(buttonPagination.length > 0){
 
 // Change Status Product
 const buttonChangeStatus = document.querySelectorAll("[button-change-status]");
-if(buttonChangeStatus.length > 0){
+if (buttonChangeStatus.length > 0) {
     const formChangeStatus = document.querySelector("#form-change-status");
     buttonChangeStatus.forEach(button => {
         button.addEventListener("click", () => {
@@ -79,69 +79,74 @@ if(buttonChangeStatus.length > 0){
 // End Change Status Product
 
 // Change Multi Product
-    // CheckBox
+// CheckBox
 const checkBoxAll = document.querySelector("input[name='check-box-all']");
 const checkBoxItems = document.querySelectorAll("input[name='check-box-item']");
-if(checkBoxAll && checkBoxItems.length > 0){
+if (checkBoxAll && checkBoxItems.length > 0) {
     checkBoxAll.addEventListener("click", () => {
-        if(checkBoxAll.checked == true){
+        if (checkBoxAll.checked == true) {
             checkBoxItems.forEach(checkBoxItem => {
                 checkBoxItem.checked = true;
-            }); 
-        } else{
+            });
+        } else {
             checkBoxItems.forEach(checkBoxItem => {
                 checkBoxItem.checked = false;
-            }); 
+            });
         }
     });
     checkBoxItems.forEach(checkBoxItem => {
         checkBoxItem.addEventListener("click", () => {
             const countChecked = Array.from(checkBoxItems).filter(checkBoxItem => checkBoxItem.checked).length;
-            if(countChecked == checkBoxItems.length){
+            if (countChecked == checkBoxItems.length) {
                 checkBoxAll.checked = true;
-            } else{
+            } else {
                 checkBoxAll.checked = false;
             }
         });
     });
 }
-    // End CheckBox
-    
-    // Form Change Multi 
+// End CheckBox
+
+// Form Change Multi 
 const formChangeMulti = document.querySelector("#form-change-multi");
-if(formChangeMulti){
+if (formChangeMulti) {
     formChangeMulti.addEventListener("submit", (e) => {
         e.preventDefault();
         const inputIds = formChangeMulti.querySelector("input[name='ids']");
         const action = formChangeMulti.querySelector("select").value;
-        if(checkBoxItems.length > 0){
+        if (checkBoxItems.length > 0) {
             const ids = [];
             checkBoxItems.forEach(checkBoxItem => {
-                if(checkBoxItem.checked){
-                    ids.push(checkBoxItem.getAttribute("idItem"));
+                if (checkBoxItem.checked) {
+                    if (action == "position") {
+                        const position = checkBoxItem.closest("tr").querySelector("input[name='position']").value;
+                        ids.push(checkBoxItem.getAttribute("idItem") + "-" + position);
+                    } else {
+                        ids.push(checkBoxItem.getAttribute("idItem"));
+                    }
                 }
             });
-            if(ids.length > 0){
+            if (ids.length > 0) {
                 inputIds.value = ids.join(", ");
-                if(action == "delete"){
+                if (action == "delete") {
                     const isConfirm = confirm("Are you sure you want to delete these products?");
-                    if(!isConfirm){
+                    if (!isConfirm) {
                         return;
                     }
                 }
                 formChangeMulti.submit();
-            } else{
+            } else {
                 alert("No checkboxes selected. Please choose at least one item.");
             }
         }
     });
 }
-    // End Form Change Multi 
+// End Form Change Multi 
 // End Change Multi Product
 
 // Form Delete Product
 const buttonDelete = document.querySelectorAll("[button-delete]");
-if(buttonDelete.length > 0){
+if (buttonDelete.length > 0) {
     console.log(buttonDelete);
     const formDelete = document.querySelector("#form-delete");
     buttonDelete.forEach(button => {

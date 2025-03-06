@@ -2,6 +2,7 @@ extends ../../layouts/default
 include ../../mixins/filter-status
 include ../../mixins/search
 include ../../mixins/pagination
+include ../../mixins/form-change-multi
 
 block main 
                 
@@ -20,30 +21,7 @@ block main
     .card.mb-3 
         h5.card-header Modify Products
         .card-body
-            form(
-                action=`${prefixAdmin}/products/change-multi?_method=PATCH`
-                method="POST"
-                class="row align-items-center"
-                id="form-change-multi"
-            )
-                .col-4
-                    select(
-                        class="form-select text-center"
-                        name="action"
-                    )
-                        option(value='active') ACTION
-                        option(value='inactive') PENDING
-                        option(value='delete') DELETE
-                    input(
-                        name="ids"
-                        value=""
-                        class="d-none"
-                    )
-                .col-6
-                    button(
-                        class="btn btn-primary"
-                        type="submit"
-                    ) Apply
+            +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
     //- End Change status multi product
 
     //- Table product list

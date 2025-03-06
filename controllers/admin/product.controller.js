@@ -35,8 +35,10 @@ module.exports.index = async (req, res) => {
     }
     //End Search
 
-    const products = await Product.find(find).limit(paginationProduct.limit)
-    .skip(paginationProduct.skip);
+    const products = await Product.find(find)
+    .limit(paginationProduct.limit)
+    .skip(paginationProduct.skip)
+    .sort({position: "desc"});
 
     res.render('admin/pages/product/index', {
         titlePage: "Trang sản phẩm",
@@ -70,6 +72,12 @@ module.exports.changeMulti = async(req, res) => {
                 deleted: true,
                 deletedAt: new Date()
             });
+            break;
+        case "position":
+            for(item of ids){
+                const [id, position] = item.split("-");
+                await Product.updateOne({_id: id}, {position: position});
+            }
             break;
         default:
             break;
