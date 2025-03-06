@@ -24,7 +24,16 @@ block main
     .card.mb-3 
         h5.card-header Modify Products
         .card-body
-            +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+            .row
+                .col-8
+                    +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+                .col-4.text-end
+                    a.btn.btn-primary.text-white(
+                        type='button'
+                        href=`${prefixAdmin}/products/create`
+                    )
+                        span.tf-icons.bx.bx-message-alt-add
+                        | &nbsp; Add Product
     //- End Change status multi product
 
     //- Table product list

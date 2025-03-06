@@ -2,6 +2,7 @@ const Product = require('../../models/product.model');
 const filterStatusHelper = require('../../helpers/filterStatus');
 const searchProductHelper = require('../../helpers/searchProduct');
 const paginationtHelper = require('../../helpers/pagination');
+const configSystem = require("../../configs/system.js");
 
 module.exports.index = async (req, res) => {
 
@@ -41,7 +42,7 @@ module.exports.index = async (req, res) => {
     .sort({position: "desc"});
 
     res.render('admin/pages/product/index', {
-        titlePage: "Trang sản phẩm",
+        titlePage: "Product List",
         products: products,
         filterStatus: filterStatus,
         keyword: searchHelper.keyword,
@@ -99,4 +100,19 @@ module.exports.delete = async(req, res) => {
     });
     req.flash('success', 'Successfully deleted product.');
     res.redirect('back');
+}
+
+module.exports.createGet = async(req, res) => {
+    res.render('admin/pages/product/create', {
+        titlePage: "Create Product"
+    });
+}
+
+module.exports.createPost = async(req, res) => {
+    const countProduct = await Product.countDocuments();
+    req.body.position = countProduct + 1;
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+    req.flash('success', `Product added successfully!`);
+    res.redirect(`${configSystem.prefixAdmin}/products`);
 }
