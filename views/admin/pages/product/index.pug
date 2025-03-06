@@ -3,8 +3,11 @@ include ../../mixins/filter-status
 include ../../mixins/search
 include ../../mixins/pagination
 include ../../mixins/form-change-multi
+include ../../mixins/alert
 
 block main 
+
+    +alert-success("5000")
                 
     //- Filter & Search
     .card.mb-3 

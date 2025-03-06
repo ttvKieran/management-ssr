@@ -158,3 +158,13 @@ if (buttonDelete.length > 0) {
     });
 }
 // End Form Delete Product
+
+//Show Alert
+const showAlert = document.querySelector("[show-alert]");
+if(showAlert){
+    const dataTime = parseInt(showAlert.getAttribute("data-time"));
+    setTimeout(() => {
+        showAlert.classList.add("alert-hidden");
+    }, dataTime);
+}
+//End Show Alert

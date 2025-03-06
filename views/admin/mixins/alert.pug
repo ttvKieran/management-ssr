@@ -1,0 +1,12 @@
+mixin alert-success(time)
+    - if (messages.success)
+        .message.success
+            div(
+                class="alert alert-success alert-dismissible"
+                role='alert'
+                show-alert 
+                data-time=time
+            ) #{messages.success} 
+                button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
+            
+  
