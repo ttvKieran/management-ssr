@@ -8,6 +8,7 @@ include ../../mixins/alert
 block main 
 
     +alert-success("5000")
+    +alert-error("5000")
                 
     //- Filter & Search
     .card.mb-3 
@@ -97,8 +98,9 @@ block main
                                     button.btn.p-0.dropdown-toggle.hide-arrow(type='button' data-bs-toggle='dropdown')
                                         i.bx.bx-dots-vertical-rounded
                                     .dropdown-menu
-                                        button(
-                                            class="dropdown-item"
+                                        a(
+                                            class="dropdown-item cursor-pointer "
+                                            href=`${prefixAdmin}/products/edit/${item.id}`
                                         )
                                             i.bx.bx-edit-alt.me-1
                                             |  Edit

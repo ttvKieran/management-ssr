@@ -3,13 +3,12 @@ include ../../mixins/alert
 block main 
     +alert-success("5000")
     +alert-error("5000")
-
     .card.mb-4 
-        h3.card-header Add New Product
+        h3.card-header Edit Product
         .card-body 
             form(
-                action=`${prefixAdmin}/products/create`
-                id="form-create-product"
+                action=`${prefixAdmin}/products/edit/${product._id}?_method=PATCH`
+                id="form-edit-product"
                 method="POST"
                 enctype="multipart/form-data"
             )
@@ -22,6 +21,7 @@ block main
                         name="title"
                         placeholder="Name Product"
                         required
+                        value=product.title
                     )
                 .mb-3
                     label(class='form-label' for="description") Description
@@ -31,7 +31,7 @@ block main
                         id="description"
                         name="description"
                         rows="5"
-                    )
+                    ) #{product.description}
                 .mb-3 
                     label(class='form-label' for="price") Price
                     input(
@@ -40,7 +40,7 @@ block main
                         id="price"
                         name="price"
                         placeholder="Name Product"
-                        value="0"
+                        value=product.price
                         min="0"
                     )
                 .mb-3 
@@ -50,7 +50,7 @@ block main
                         class="form-control"
                         id="discountPercentage"
                         name="discountPercentage"
-                        value="0"
+                        value=product.discountPercentage
                         min="0"
                     )
                 .mb-3 
@@ -60,7 +60,7 @@ block main
                         class="form-control"
                         id="stock"
                         name="stock"
-                        value="0"
+                        value=product.stock
                         min="0"
                     )
                 .mb-3
@@ -71,6 +71,12 @@ block main
                         name="thumbnail"
                         id="thumbnail"
                         accept="image/*"
+                        input-upload-image 
+                    )
+                    img(
+                        class="image-preview"
+                        image-preview-upload
+                        src=product.thumbnail
                     )
                 .mb-3 
                     label(class="form-label" for="position") Position
@@ -81,6 +87,7 @@ block main
                         name="position"
                         placeholder="Auto increase"
                         min="1"
+                        value=product.position
                     )
                 .mb-3.col-md 
                     .d-block Status 
@@ -91,7 +98,7 @@ block main
                             name="status" 
                             value="active"
                             id="active"
-                            checked
+                            checked=(product.status == "active" ? true : false)
                         ) 
                         label(class="form-check-label" for="active") Action
                     .form-check.form-check-inline.mt-3 
@@ -101,12 +108,13 @@ block main
                             name="status" 
                             value="inactive"
                             id="inactive"
+                            checked=(product.status == "inactive" ? true : false)
                         ) 
                         label(class="form-check-label" for="inactive") Pending
                 .mb-3 
                     button(
                         type="submit"
                         class="btn btn-primary"
-                    ) Create
+                    ) Edit
         
         

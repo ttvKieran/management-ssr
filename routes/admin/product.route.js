@@ -4,6 +4,7 @@ const productController = require('../../controllers/admin/product.controller');
 const multer = require('multer');
 const storageMulter = require('../../helpers/storageMulter');
 const upload = multer({ storage: storageMulter() });
+const productValidate = require('../../validates/productValidate');
 
 // GET - admin/products
 routes.get('/', productController.index);
@@ -21,6 +22,20 @@ routes.delete('/delete/:id', productController.delete);
 routes.get('/create', productController.createGet);
 
 // POST - admin/products/create
-routes.post('/create', upload.single('thumbnail'), productController.createPost);
+routes.post('/create', 
+    upload.single('thumbnail'), 
+    productValidate.createValidate,
+    productController.createPost
+);
+
+// GET - admin/products/edit
+routes.get('/edit/:id', productController.editGet);
+
+// PATCH - admin/products/edit
+routes.patch('/edit/:id', 
+    upload.single('thumbnail'), 
+    productValidate.createValidate,
+    productController.editPatch
+);
 
 module.exports = routes;

@@ -109,11 +109,57 @@ module.exports.createGet = async(req, res) => {
 }
 
 module.exports.createPost = async(req, res) => {
-    const countProduct = await Product.countDocuments();
-    req.body.position = countProduct + 1;
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
+    if(!req.body.position){
+        const countProduct = await Product.countDocuments();
+        req.body.position = countProduct + 1;
+    }
+    if(req.file){
+        req.body.thumbnail = `/uploads/${req.file.filename}`;
+    }
+
     const newProduct = new Product(req.body);
     await newProduct.save();
+
     req.flash('success', `Product added successfully!`);
     res.redirect(`${configSystem.prefixAdmin}/products`);
+}
+
+module.exports.editGet = async(req, res) => {
+    const id = req.params.id;
+    const find = {
+        deleted: false,
+        _id: id
+    }
+    try {
+        const product = await Product.findOne(find);
+        res.render('admin/pages/product/edit', {
+            titlePage: "Edit Product",
+            product: product
+        });
+    } catch (error) {
+        req.flash('error', `The product does not exist.`);
+        res.redirect(`${configSystem.prefixAdmin}/products`);
+        return;
+    }
+}
+
+module.exports.editPatch = async(req, res) => {
+    if(!req.body.position){
+        const countProduct = await Product.countDocuments();
+        req.body.position = countProduct + 1;
+    }
+    if(req.file){
+        req.body.thumbnail = `/uploads/${req.file.filename}`;
+    }
+
+    try {
+        await Product.updateOne({_id: req.params.id}, req.body);
+    } catch (error) {
+        req.flash('error', `The product does not exist.`);
+        res.redirect('back');
+        return;
+    }
+    
+    req.flash('success', `Product edited successfully!`);
+    res.redirect(`back`);
 }
