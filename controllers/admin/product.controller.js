@@ -163,3 +163,22 @@ module.exports.editPatch = async(req, res) => {
     req.flash('success', `Product edited successfully!`);
     res.redirect(`back`);
 }
+
+module.exports.detail = async(req, res) => {
+    const id = req.params.id;
+    const find = {
+        deleted: false,
+        _id: id
+    }
+    try {
+        const product = await Product.findOne(find);
+        res.render('admin/pages/product/detail', {
+            titlePage: "Detail Product",
+            product: product
+        });
+    } catch (error) {
+        req.flash('error', `The product does not exist.`);
+        res.redirect(`${configSystem.prefixAdmin}/products`);
+        return;
+    }
+}

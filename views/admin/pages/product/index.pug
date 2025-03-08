@@ -68,7 +68,8 @@ block main
                                     width="60px"
                                     height="auto"
                                 )
-                            td #{item.title}
+                            td 
+                                a.text-dark(href=`${prefixAdmin}/products/detail/${item.id}`) #{item.title}
                             td #{item.price}
                             td 
                                 input(

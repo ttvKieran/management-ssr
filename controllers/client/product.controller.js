@@ -20,3 +20,15 @@ module.exports.create = (req, res) => {
         titlePage: "Trang tạo mới sản phẩm"
     });
 }
+
+module.exports.detail = async (req, res) => {
+    const product = await Product.findOne({
+        status: "active",
+        deleted: false,
+        slug: req.params.slug
+    });
+    res.render("client/pages/product/detail", {
+        titlePage: "Detail Product",
+        product: product
+    });
+}

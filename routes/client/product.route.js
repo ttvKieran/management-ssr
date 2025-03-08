@@ -2,8 +2,13 @@ const express = require('express');
 const routes = express.Router();
 const productController = require('../../controllers/client/product.controller');
 
-routes.use('/', productController.index);
+// GET - /products
+routes.get('/', productController.index);
 
-routes.use('/create', productController.create);
+// GET - /products/detail/:slug
+routes.get('/detail/:slug', productController.detail);
+
+// GET - /products/create
+routes.get('/create', productController.create);
 
 module.exports = routes;

@@ -38,4 +38,7 @@ routes.patch('/edit/:id',
     productController.editPatch
 );
 
+// GET - admin/products/detail/:id
+routes.get('/detail/:id', productController.detail);
+
 module.exports = routes;
