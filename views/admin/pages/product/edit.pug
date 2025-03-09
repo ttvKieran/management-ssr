@@ -1,0 +1,120 @@
+extends ../../layouts/default
+include ../../mixins/alert
+block main 
+    +alert-success("5000")
+    +alert-error("5000")
+    .card.mb-4 
+        h3.card-header Edit Product
+        .card-body 
+            form(
+                action=`${prefixAdmin}/products/edit/${product._id}?_method=PATCH`
+                id="form-edit-product"
+                method="POST"
+                enctype="multipart/form-data"
+            )
+                .mb-3 
+                    label(class='form-label' for="title") Title
+                    input(
+                        type="text"
+                        class="form-control"
+                        id="title"
+                        name="title"
+                        placeholder="Name Product"
+                        required
+                        value=product.title
+                    )
+                .mb-3
+                    label(class='form-label' for="description") Description
+                    textarea(
+                        type="text"
+                        class="form-control"
+                        id="description"
+                        name="description"
+                        rows="5"
+                    ) #{product.description}
+                .mb-3 
+                    label(class='form-label' for="price") Price
+                    input(
+                        type="number"
+                        class="form-control"
+                        id="price"
+                        name="price"
+                        placeholder="Name Product"
+                        value=product.price
+                        min="0"
+                    )
+                .mb-3 
+                    label(class='form-label' for="discountPercentage") Discount Percentage
+                    input(
+                        type="number"
+                        class="form-control"
+                        id="discountPercentage"
+                        name="discountPercentage"
+                        value=product.discountPercentage
+                        min="0"
+                    )
+                .mb-3 
+                    label(class='form-label' for="stock") Stock
+                    input(
+                        type="number"
+                        class="form-control"
+                        id="stock"
+                        name="stock"
+                        value=product.stock
+                        min="0"
+                    )
+                .mb-3
+                    label(class="form-label" for="thumbnail") Image
+                    input(
+                        type="file" 
+                        class="form-control"
+                        name="thumbnail"
+                        id="thumbnail"
+                        accept="image/*"
+                        input-upload-image 
+                    )
+                    img(
+                        class="image-preview"
+                        image-preview-upload
+                        src=product.thumbnail
+                    )
+                .mb-3 
+                    label(class="form-label" for="position") Position
+                    input(
+                        type="number"
+                        class="form-control"
+                        id="position"
+                        name="position"
+                        placeholder="Auto increase"
+                        min="1"
+                        value=product.position
+                    )
+                .mb-3.col-md 
+                    .d-block Status 
+                    .form-check.form-check-inline.mt-3 
+                        input(
+                            type="radio" 
+                            class="form-check-input" 
+                            name="status" 
+                            value="active"
+                            id="active"
+                            checked=(product.status == "active" ? true : false)
+                        ) 
+                        label(class="form-check-label" for="active") Action
+                    .form-check.form-check-inline.mt-3 
+                        input(
+                            type="radio" 
+                            class="form-check-input" 
+                            name="status" 
+                            value="inactive"
+                            id="inactive"
+                            checked=(product.status == "inactive" ? true : false)
+                        ) 
+                        label(class="form-check-label" for="inactive") Pending
+                .mb-3 
+                    button(
+                        type="submit"
+                        class="btn btn-primary"
+                    ) Edit
+        
+        

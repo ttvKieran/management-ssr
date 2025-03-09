@@ -1,0 +1,36 @@
+extends ../../layouts/default
+include ../../mixins/alert
+block main 
+    +alert-success("5000")
+    +alert-error("5000")
+
+    .row.mb-5 
+        .col-md
+            .card.mb-3
+                .row.g-0
+                    .col-md-4
+                        img.card-img.card-img-left(src=product.thumbnail alt='Card image')
+                    .col-md-8.align-content-center
+                        .card-body
+                            h3.card-title #{product.title}
+                            p.card-text.w-75 Description: #{product.description}
+                            p.card-text Price: $#{product.price}
+                            p.card-text
+                                small.text-muted Discount Percentage: #{product.discountPercentage}%
+                            p.card-text Position: #{product.position}
+                            p.card-text Stock: #{product.stock}
+                            p.card-text.d-inline.me-2 Status: 
+                            if(product.status=="active")
+                                span(
+                                    class="badge bg-label-primary me-1 cursor-pointer" 
+                                ) Active
+                            else 
+                                span(
+                                    class="badge bg-label-warning me-1 cursor-pointer"
+                                ) Pending
+                            .mt-5 
+                                a(
+                                    class="btn btn-primary"
+                                    href=`${prefixAdmin}/products/edit/${product.id}`
+                                ) Edit
+        

@@ -1,0 +1,149 @@
+extends ../../layouts/default
+include ../../mixins/filter-status
+include ../../mixins/search
+include ../../mixins/pagination
+include ../../mixins/form-change-multi
+include ../../mixins/alert
+include ../../mixins/form-sort-multi
+
+block main 
+
+    +alert-success("5000")
+    +alert-error("5000")
+                
+    //- Filter & Search
+    .card.mb-3 
+        h5.card-header Filters &amp; Search
+        .card-body
+            .row.align-items-center
+                .col-6
+                    +filterStatus(filterStatus)
+                .col-6
+                    +search(keyword)
+    //- End Filter & Search
+
+    //- Sort
+    .card.mb-3 
+        h5.card-header Sort
+        .card-body
+            .row
+                .col-8
+                    +form-sort-multi()
+    //- End Sort
+    
+    //- Change status multi product
+    .card.mb-3 
+        h5.card-header Modify Products
+        .card-body
+            .row
+                .col-8
+                    +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+                .col-4.text-end
+                    a.btn.btn-primary.text-white(
+                        type='button'
+                        href=`${prefixAdmin}/products/create`
+                    )
+                        span.tf-icons.bx.bx-message-alt-add
+                        | &nbsp; Add Product
+    //- End Change status multi product
+
+    //- Table product list
+    .card
+        h5.card-header Product List
+        .table-responsive.text-nowrap
+            table.table
+                thead
+                    tr
+                        th 
+                            input(type="checkbox" name="check-box-all")
+                        th NO.
+                        th IMAGE
+                        th TITLE
+                        th PRICE
+                        th POSITION
+                        th STATUS
+                        th ACTIONS
+                tbody.table-border-bottom-0
+                    each item, index in products
+                        tr
+                            td 
+                                input(type="checkbox" name="check-box-item" idItem=`${item.id}`)
+                            td
+                                i.fab.fa-angular.fa-lg.text-danger.me-3
+                                strong #{index + 1}
+                            td 
+                                img(
+                                    src=item.thumbnail
+                                    alt=item.title
+                                    width="60px"
+                                    height="auto"
+                                )
+                            td 
+                                a.text-dark(href=`${prefixAdmin}/products/detail/${item.id}`) #{item.title}
+                            td #{item.price}
+                            td 
+                                input(
+                                    type="number"
+                                    value=item.position 
+                                    style="width: 60px; text-align: center; border-radius: 10px"
+                                    min="1"
+                                    name="position"
+                                )
+                            td
+                                if(item.status=="active")
+                                    span(
+                                        class="badge bg-label-primary me-1 cursor-pointer" 
+                                        button-change-status
+                                        statusCurrent=item.status
+                                        idItem=item.id
+                                    ) Active
+                                else 
+                                    span(
+                                        class="badge bg-label-warning me-1 cursor-pointer"
+                                        button-change-status
+                                        statusCurrent=item.status
+                                        idItem=item.id
+                                    ) Pending
+                            td
+                                .dropdown
+                                    button.btn.p-0.dropdown-toggle.hide-arrow(type='button' data-bs-toggle='dropdown')
+                                        i.bx.bx-dots-vertical-rounded
+                                    .dropdown-menu
+                                        a(
+                                            class="dropdown-item cursor-pointer "
+                                            href=`${prefixAdmin}/products/edit/${item.id}`
+                                        )
+                                            i.bx.bx-edit-alt.me-1
+                                            |  Edit
+                                        button(
+                                            class="dropdown-item"
+                                            button-delete
+                                            idItem=`${item.id}`
+                                        )
+                                            i.bx.bx-trash.me-1
+                                            |  Delete
+    //- End Table product list
+
+    //- Basic Pagination
+    +pagination(pagination)
+    //- End Basic Pagination
+
+    //- Form change status
+    form(
+        action
+        method="POST"
+        id="form-change-status"
+        path=`${prefixAdmin}/products/change-status`
+    )
+    //- End Form change status
+
+    //- Form delete product
+    form(
+        action
+        method="POST"
+        id="form-delete"
+        path=`${prefixAdmin}/products/delete`
+    )
+    //- End Form delete product
+
+    

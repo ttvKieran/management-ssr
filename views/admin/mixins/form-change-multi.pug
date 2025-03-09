@@ -1,0 +1,27 @@
+mixin form-change-multi(path)
+    form(
+        action=path
+        method="POST"
+        class="row align-items-center"
+        id="form-change-multi"
+    )
+        .col-6
+            select(
+                class="form-select text-center"
+                name="action"
+            )
+                option(disabled selected) -----SELECT ACTION-----
+                option(value='active') ACTION
+                option(value='inactive') PENDING
+                option(value='delete') DELETE
+                option(value='position') POSITION
+            input(
+                name="ids"
+                value=""
+                class="d-none"
+            )
+        .col-4
+            button(
+                class="btn btn-primary"
+                type="submit"
+            ) Apply
