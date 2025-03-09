@@ -36,10 +36,21 @@ module.exports.index = async (req, res) => {
     }
     //End Search
 
+    //Sort
+    const sort = {};
+    // {position: "desc"}
+    const {sortKey, sortValue} = req.query;
+    if(sortKey && sortValue){
+        sort[sortKey] = sortValue;
+    } else{
+        sort.positon = "desc";
+    }
+    //End Sort
+
     const products = await Product.find(find)
     .limit(paginationProduct.limit)
     .skip(paginationProduct.skip)
-    .sort({position: "desc"});
+    .sort(sort);
 
     res.render('admin/pages/product/index', {
         titlePage: "Product List",
@@ -144,9 +155,6 @@ module.exports.editPatch = async(req, res) => {
     if(!req.body.position){
         const countProduct = await Product.countDocuments();
         req.body.position = countProduct + 1;
-    }
-    if(req.file){
-        req.body.thumbnail = `/uploads/${req.file.filename}`;
     }
 
     try {

@@ -4,6 +4,7 @@ include ../../mixins/search
 include ../../mixins/pagination
 include ../../mixins/form-change-multi
 include ../../mixins/alert
+include ../../mixins/form-sort-multi
 
 block main 
 
@@ -20,6 +21,15 @@ block main
                 .col-6
                     +search(keyword)
     //- End Filter & Search
+
+    //- Sort
+    .card.mb-3 
+        h5.card-header Sort
+        .card-body
+            .row
+                .col-8
+                    +form-sort-multi()
+    //- End Sort
     
     //- Change status multi product
     .card.mb-3 

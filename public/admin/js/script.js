@@ -147,7 +147,6 @@ if (formChangeMulti) {
 // Form Delete Product
 const buttonDelete = document.querySelectorAll("[button-delete]");
 if (buttonDelete.length > 0) {
-    console.log(buttonDelete);
     const formDelete = document.querySelector("#form-delete");
     buttonDelete.forEach(button => {
         button.addEventListener("click", () => {
@@ -181,3 +180,30 @@ if(inputUploadImage){
     }); 
 }
   /* End Image Preview */
+
+// Sort Multi 
+const sortMulti = document.querySelector("select[name='sort']");
+if(sortMulti){
+    const url = new URL(window.location.href);
+    sortMulti.addEventListener("change", (e) => {
+        const [sortKey, sortValue] = e.target.value.split('-');
+        if(sortKey && sortValue){
+            url.searchParams.set("sortKey", sortKey);
+            url.searchParams.set("sortValue", sortValue);
+            window.location.href = url;
+        }
+    });
+    const sortKey = (url.searchParams.get("sortKey"));
+    const sortValue = (url.searchParams.get("sortValue"));
+    if(sortKey && sortValue){
+        const option = sortMulti.querySelector(`option[value='${sortKey}-${sortValue}']`);
+        option.selected = true;
+    }
+    const buttonClear = document.querySelector("button[button-clear-sort]");
+    buttonClear.addEventListener("click", () => {
+        url.searchParams.delete("sortKey");
+        url.searchParams.delete("sortValue");
+        window.location.href = url;
+    });
+}
+// End Sort Multi 
