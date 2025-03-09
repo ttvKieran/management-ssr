@@ -2,8 +2,8 @@ const express = require('express');
 const routes = express.Router();
 const productController = require('../../controllers/admin/product.controller');
 const multer = require('multer');
-const storageMulter = require('../../helpers/storageMulter');
-const upload = multer({ storage: storageMulter() });
+const fileUpload = multer();
+const uploadCloud = require('../../middlewares/admin/uploadCloud.middleware');
 const productValidate = require('../../validates/productValidate');
 
 // GET - admin/products
@@ -23,7 +23,8 @@ routes.get('/create', productController.createGet);
 
 // POST - admin/products/create
 routes.post('/create', 
-    upload.single('thumbnail'), 
+    fileUpload.single('thumbnail'),
+    uploadCloud.upload,
     productValidate.createValidate,
     productController.createPost
 );
@@ -33,7 +34,8 @@ routes.get('/edit/:id', productController.editGet);
 
 // PATCH - admin/products/edit
 routes.patch('/edit/:id', 
-    upload.single('thumbnail'), 
+    fileUpload.single('thumbnail'), 
+    uploadCloud.upload,
     productValidate.createValidate,
     productController.editPatch
 );

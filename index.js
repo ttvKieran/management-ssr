@@ -10,6 +10,8 @@ const session = require('express-session');
 const app = express();
 const port = 3000;
 
+require('dotenv').config();
+
 const route = require('./routes/client/index.route');
 const routeAdmin = require('./routes/admin/index.route');
 
@@ -27,8 +29,6 @@ app.use(flash());
 
 app.set('views', './views');
 app.set('view engine', 'pug');
-
-require('dotenv').config();
 
 //Local variable
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
