@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const flash = require('express-flash'); 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const path = require('path');
 
 const app = express();
 const port = 3000;
@@ -20,6 +21,8 @@ app.use(express.static('public'));
 app.use(methodOverride('_method'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // Express flash
 app.use(cookieParser('MUAXUANDENBINHYEN'));
