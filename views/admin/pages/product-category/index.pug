@@ -1,0 +1,81 @@
+extends ../../layouts/default
+include ../../mixins/filter-status
+include ../../mixins/search
+include ../../mixins/pagination
+include ../../mixins/form-change-multi
+include ../../mixins/alert
+include ../../mixins/form-sort-multi
+include ../../mixins/table-tree
+
+block main 
+
+    +alert-success("5000")
+    +alert-error("5000")
+
+    //- Filter & Search
+    .card.mb-3 
+        h5.card-header Filters &amp; Search
+        .card-body
+            .row.align-items-center
+                .col-6
+                    +filterStatus(filterStatus)
+                .col-6
+                    +search(keyword)
+    //- End Filter & Search
+
+    //- Table list
+    .card
+        //- Change status multi
+        .row.align-items-center
+            .col-5
+                .card-body
+                    +form-sort-multi()
+                //- End Sort
+            .col-5
+                .card-body
+                    +form-change-multi(`${prefixAdmin}/product-category/change-multi?_method=PATCH`)
+            .col-2
+                a.btn.btn-primary.text-white(
+                    type='button'
+                    href=`${prefixAdmin}/product-category/create`
+                )
+                    span.tf-icons.bx.bx-message-alt-add
+                    | &nbsp; Add
+        //- End Change status multi
+        .table-responsive.text-nowrap
+            table.table
+                thead
+                    tr
+                        th 
+                            input(type="checkbox" name="check-box-all")
+                        th NO.
+                        th IMAGE
+                        th TITLE
+                        th POSITION
+                        th STATUS
+                        th ACTIONS
+                tbody.table-border-bottom-0
+                    +table-tree(productCategory)
+    //- End Table list
+
+    //- Basic Pagination
+    +pagination(pagination)
+    //- End Basic Pagination
+
+    //- Form change status
+    form(
+        action
+        method="POST"
+        id="form-change-status"
+        path=`${prefixAdmin}/product-category/change-status`
+    )
+    //- End Form change status
+
+    //- Form delete
+    form(
+        action
+        method="POST"
+        id="form-delete"
+        path=`${prefixAdmin}/product-category/delete`
+    )
+    //- End Form delete

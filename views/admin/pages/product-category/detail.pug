@@ -9,18 +9,15 @@ block main
             .card.mb-3
                 .row.g-0
                     .col-md-4
-                        img.card-img.card-img-left(src=product.thumbnail alt='Card image')
+                        img.card-img.card-img-left(src=productCategory.thumbnail alt='Card image')
                     .col-md-8.align-content-center
                         .card-body
-                            h3.card-title #{product.title}
-                            p.card-text.w-75 Description: !{product.description}
-                            p.card-text Price: $#{product.price}
-                            p.card-text
-                                small.text-muted Discount Percentage: #{product.discountPercentage}%
-                            p.card-text Position: #{product.position}
-                            p.card-text Stock: #{product.stock}
+                            h3.card-title #{productCategory.title}
+                            p.card-text.w-75 Description: !{productCategory.description}
+                            p.card-text Position: #{productCategory.position}
+                            p.card-text Parent Category: #{parent_category.title}
                             p.card-text.d-inline.me-2 Status: 
-                            if(product.status=="active")
+                            if(productCategory.status=="active")
                                 span(
                                     class="badge bg-label-primary me-1 cursor-pointer" 
                                 ) Active
@@ -31,6 +28,6 @@ block main
                             .mt-5 
                                 a(
                                     class="btn btn-primary"
-                                    href=`${prefixAdmin}/products/edit/${product.id}`
+                                    href=`${prefixAdmin}/product-category/edit/${productCategory.id}`
                                 ) Edit
         

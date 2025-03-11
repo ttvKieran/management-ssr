@@ -1,13 +1,19 @@
-nav#layout-navbar.layout-navbar.container-xxl.navbar.navbar-expand-xl.navbar-detached.align-items-center.bg-navbar-theme
+nav#layout-navbar.layout-navbar.container-xxl.navbar.navbar-expand-xl.navbar-detached.align-items-center.bg-navbar-theme.p-30
     .layout-menu-toggle.navbar-nav.align-items-xl-center.me-3.me-xl-0.d-xl-none
         a.nav-item.nav-link.px-0.me-xl-4(href='javascript:void(0)')
             i.bx.bx-menu.bx-sm
     #navbar-collapse.navbar-nav-right.d-flex.align-items-center
         // Search
+        //- .navbar-nav.align-items-center
+        //-     .nav-item.d-flex.align-items-center
+        //-         i.bx.bx-search.fs-4.lh-0
+        //-         input.form-control.border-0.shadow-none(type='text' placeholder='Search...' aria-label='Search...')
         .navbar-nav.align-items-center
             .nav-item.d-flex.align-items-center
-                i.bx.bx-search.fs-4.lh-0
-                input.form-control.border-0.shadow-none(type='text' placeholder='Search...' aria-label='Search...')
+                .col-sm-4.col-lg-3.text-center.text-sm-start
+                    .main-logo 
+                        a(href="/")
+                            img.w-px-150.h-auto(src="/client/images/logo.png", alt="logo")
         // /Search
         ul.navbar-nav.flex-row.align-items-center.ms-auto
             // Place this tag where you want the button to render.
