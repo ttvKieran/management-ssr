@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
             link.parentNode.classList.add("active");
             let parentLink = link.closest("li.menu-item.root-menu");
             if(parentLink){
-                console.log(parentLink);
                 parentLink.classList.add("active");
                 parentLink.classList.add("open");
             }

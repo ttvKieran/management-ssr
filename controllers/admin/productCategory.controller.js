@@ -1,4 +1,4 @@
-const ProductCategory = require('../../models/productCategory.model');
+const ProductCategory = require('../../models/product-category.model');
 const filterStatusHelper = require('../../helpers/filterStatus');
 const searchHelper = require('../../helpers/search.js');
 const paginationtHelper = require('../../helpers/pagination');

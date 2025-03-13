@@ -51,5 +51,19 @@ aside#layout-menu.layout-menu.menu-vertical.menu.bg-menu-theme
             li.menu-item
               a.menu-link(href='/admin/product-category')
                 div(data-i18n='Product Category') Product Category
-
+        // Roles
+        li.menu-header.small.text-uppercase
+          span.menu-header-text Settings
+        // Role List
+        li.menu-item.root-menu
+          a.menu-link.menu-toggle(href='javascript:void(0);')
+            i.menu-icon.tf-icons.bx.bx-layout
+            div(data-i18n='Roles') Roles
+          ul.menu-sub
+            li.menu-item
+              a.menu-link(href='/admin/roles')
+                div(data-i18n='Role List') Role List
+            li.menu-item
+              a.menu-link(href='/admin/roles/permission')
+                div(data-i18n='Permission') Permission
 // / Menu

@@ -1,4 +1,4 @@
-const Product = require('../../models/product.model');
+const Product = require('../../models/products.model.js');
 const filterStatusHelper = require('../../helpers/filterStatus');
 const searchHelper = require('../../helpers/search');
 const paginationtHelper = require('../../helpers/pagination');

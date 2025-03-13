@@ -1,6 +1,7 @@
 const express = require('express');
 const routes = express.Router();
 const productCategoryController = require('../../controllers/admin/productCategory.controller');
+const productCategoryValidate = require('../../validates/productCategoryValidate');
 const multer = require('multer');
 const fileUpload = multer();
 const uploadCloud = require('../../middlewares/admin/uploadCloud.middleware');
@@ -24,6 +25,7 @@ routes.get('/create', productCategoryController.createGet);
 routes.post('/create', 
     fileUpload.single('thumbnail'),
     uploadCloud.upload,
+    productCategoryValidate.createValidate,
     productCategoryController.createPost
 );
 
@@ -34,6 +36,7 @@ routes.get('/edit/:id', productCategoryController.editGet);
 routes.patch('/edit/:id', 
     fileUpload.single('thumbnail'), 
     uploadCloud.upload,
+    productCategoryValidate.createValidate,
     productCategoryController.editPatch
 );
 
