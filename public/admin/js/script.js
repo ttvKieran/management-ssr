@@ -179,6 +179,8 @@ if(inputUploadImage){
         const [file] = e.target.files;
         if(file){
             const imagePreviewUpload = document.querySelector("[image-preview-upload]");
+            imagePreviewUpload.classList.remove("d-none");
+            imagePreviewUpload.classList.add("d-block");
             imagePreviewUpload.src = URL.createObjectURL(file);
         }
     }); 

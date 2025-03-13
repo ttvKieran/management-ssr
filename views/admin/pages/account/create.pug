@@ -1,0 +1,101 @@
+extends ../../layouts/default
+include ../../mixins/alert
+block main 
+    +alert-success("5000")
+    +alert-error("5000")
+    .card.mb-4 
+        h3.card-header Add New Account
+        .card-body 
+            form(
+                action=`${prefixAdmin}/accounts/create`
+                id="form-create"
+                method="POST"
+                enctype="multipart/form-data"
+            )
+                .mb-3 
+                    label(class='form-label' for="fullname") FullName
+                    input(
+                        type="text"
+                        class="form-control"
+                        id="fullname"
+                        name="fullname"
+                        placeholder="Full Name"
+                        required
+                    )
+                .mb-3
+                    label(class='form-label' for="email") Email
+                    input(
+                        type="email"
+                        class="form-control textarea-tinymce"
+                        id="email"
+                        name="email"
+                        placeholder="abc@gmail.com"
+                        required
+                    )
+                .mb-3 
+                    label(class='form-label' for="password") Password
+                    input(
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        name="password"
+                        required
+                    )
+                .mb-3
+                    label(class='form-label' for="role_id") Role
+                    select.w-25(
+                        class="form-select"
+                        name="role_id"
+                    )
+                        each item in roles
+                            option(value=item.id) #{item.title}
+                .mb-3 
+                    label(class='form-label' for="phonenumber") Phone Number
+                    input(
+                        type="text"
+                        class="form-control"
+                        id="phonenumber"
+                        name="phonenumber"
+                    )
+                .mb-3
+                    label(class="form-label" for="avatar") Avatar
+                    input(
+                        type="file" 
+                        class="form-control"
+                        name="avatar"
+                        id="avatar"
+                        accept="image/*"
+                        input-upload-image 
+                    )
+                    img.d-none(
+                        class="image-preview"
+                        image-preview-upload
+                    )
+                .mb-3.col-md 
+                    .d-block Status 
+                    .form-check.form-check-inline.mt-3 
+                        input(
+                            type="radio" 
+                            class="form-check-input" 
+                            name="status" 
+                            value="active"
+                            id="active"
+                            checked
+                        ) 
+                        label(class="form-check-label" for="active") Action
+                    .form-check.form-check-inline.mt-3 
+                        input(
+                            type="radio" 
+                            class="form-check-input" 
+                            name="status" 
+                            value="inactive"
+                            id="inactive"
+                        ) 
+                        label(class="form-check-label" for="inactive") Pending
+                .mb-3 
+                    button(
+                        type="submit"
+                        class="btn btn-primary"
+                    ) Create
+        
+        
