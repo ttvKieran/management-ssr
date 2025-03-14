@@ -1,4 +1,6 @@
 extend ../../layouts/default
-
+include ../../mixins/alert
 block main 
-    h1 #{titlePage}
+    +alert-success("5000")
+    +alert-error("5000")
+    h1 Dash Board

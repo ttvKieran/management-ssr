@@ -10,6 +10,10 @@ const accountSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    refreshToken: {
+        type: String, 
+        default: ""
+    },
     avatar: String,
     status: String,
     deleted: {

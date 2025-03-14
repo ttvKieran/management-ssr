@@ -1,3 +1,4 @@
 module.exports = {
-    prefixAdmin: "/admin"
+    prefixAdmin: "/admin",
+    refreshTokenSize: 30
 };
