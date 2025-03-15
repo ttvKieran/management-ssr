@@ -20,13 +20,14 @@ block main
                     +filterStatus(filterStatus)
                 .col-5
                     +search(keyword)
-                .col-2.text-end
-                    a.btn.btn-primary.text-white.fs-sm-10.p-sm-8.mb-2(
-                        type='button'
-                        href=`${prefixAdmin}/accounts/create`
-                    )
-                        span.tf-icons.bx.bx-message-alt-add.fs-sm-10.p-sm-8.d-none.d-sm-inline
-                        | &nbsp; Add
+                if(user.role.permissions.includes("account_create"))
+                    .col-2.text-end
+                        a.btn.btn-primary.text-white.fs-sm-10.p-sm-8.mb-2(
+                            type='button'
+                            href=`${prefixAdmin}/accounts/create`
+                        )
+                            span.tf-icons.bx.bx-message-alt-add.fs-sm-10.p-sm-8.d-none.d-sm-inline
+                            | &nbsp; Add
     //- End Filter & Search
 
     //- Table product list
@@ -66,38 +67,51 @@ block main
                             td 
                                 .text-dark #{item.phonenumber}
                             td
-                                if(item.status=="active")
-                                    span(
-                                        class="badge bg-label-primary me-1 cursor-pointer" 
-                                        button-change-status
-                                        statusCurrent=item.status
-                                        idItem=item.id
-                                    ) Active
+                                if(user.role.permissions.includes("account_edit"))
+                                    if(item.status=="active")
+                                        span(
+                                            class="badge bg-label-primary me-1 cursor-pointer" 
+                                            button-change-status
+                                            statusCurrent=item.status
+                                            idItem=item.id
+                                        ) Active
+                                    else 
+                                        span(
+                                            class="badge bg-label-warning me-1 cursor-pointer"
+                                            button-change-status
+                                            statusCurrent=item.status
+                                            idItem=item.id
+                                        ) Pending
+
                                 else 
-                                    span(
-                                        class="badge bg-label-warning me-1 cursor-pointer"
-                                        button-change-status
-                                        statusCurrent=item.status
-                                        idItem=item.id
-                                    ) Pending
+                                    if(item.status=="active")
+                                        span(
+                                            class="badge bg-label-primary me-1" 
+                                        ) Active
+                                    else 
+                                        span(
+                                            class="badge bg-label-warning me-1"
+                                        ) Pending
                             td
                                 .dropdown
                                     button.btn.p-0.dropdown-toggle.hide-arrow(type='button' data-bs-toggle='dropdown')
                                         i.bx.bx-dots-vertical-rounded
                                     .dropdown-menu
-                                        a(
-                                            class="dropdown-item cursor-pointer "
-                                            href=`${prefixAdmin}/accounts/edit/${item.id}`
-                                        )
-                                            i.bx.bx-edit-alt.me-1
-                                            |  Edit
-                                        button(
-                                            class="dropdown-item"
-                                            button-delete
-                                            idItem=`${item.id}`
-                                        )
-                                            i.bx.bx-trash.me-1
-                                            |  Delete
+                                        if(user.role.permissions.includes("account_edit"))
+                                            a(
+                                                class="dropdown-item cursor-pointer "
+                                                href=`${prefixAdmin}/accounts/edit/${item.id}`
+                                            )
+                                                i.bx.bx-edit-alt.me-1
+                                                |  Edit
+                                        if(user.role.permissions.includes("account_delete"))
+                                            button(
+                                                class="dropdown-item"
+                                                button-delete
+                                                idItem=`${item.id}`
+                                            )
+                                                i.bx.bx-trash.me-1
+                                                |  Delete
     //- End Table product list
 
     //- Basic Pagination

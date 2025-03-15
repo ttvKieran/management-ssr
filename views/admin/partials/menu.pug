@@ -45,36 +45,43 @@ aside#layout-menu.layout-menu.menu-vertical.menu.bg-menu-theme
             i.menu-icon.tf-icons.bx.bx-layout
             div(data-i18n='Product') Product
           ul.menu-sub
-            li.menu-item
-              a.menu-link(href='/admin/products')
-                div(data-i18n='Product List') Product List
-            li.menu-item
-              a.menu-link(href='/admin/product-category')
-                div(data-i18n='Product Category') Product Category
+            if(user.role.permissions.includes("product_view"))
+              li.menu-item
+                a.menu-link(href='/admin/products')
+                  div(data-i18n='Product List') Product List
+            if(user.role.permissions.includes("product-category_view"))
+              li.menu-item
+                a.menu-link(href='/admin/product-category')
+                  div(data-i18n='Product Category') Product Category
         // Roles
         li.menu-header.small.text-uppercase
           span.menu-header-text Settings
         // Role List
-        li.menu-item.root-menu
-          a.menu-link.menu-toggle(href='javascript:void(0);')
-            i.menu-icon.tf-icons.bx.bx-layout
-            div(data-i18n='Roles') Roles
-          ul.menu-sub
-            li.menu-item
-              a.menu-link(href='/admin/roles')
-                div(data-i18n='Role List') Role List
-            li.menu-item
-              a.menu-link(href='/admin/roles/permission')
-                div(data-i18n='Permission') Permission
-        li.menu-item.root-menu
-          a.menu-link.menu-toggle(href='javascript:void(0);')
-            i.menu-icon.tf-icons.bx.bx-layout
-            div(data-i18n='Accounts') Accounts
-          ul.menu-sub
-            li.menu-item
-              a.menu-link(href='/admin/accounts')
-                div(data-i18n='Account List') Account List
-            li.menu-item
-              a.menu-link(href='/admin/accounts/create')
-                div(data-i18n='Create Account') Create Account
+        if(user.role.permissions.includes("role_view"))
+          li.menu-item.root-menu
+            a.menu-link.menu-toggle(href='javascript:void(0);')
+              i.menu-icon.tf-icons.bx.bx-layout
+              div(data-i18n='Roles') Roles
+            ul.menu-sub
+              if(user.role.permissions.includes("role_view"))
+                li.menu-item
+                  a.menu-link(href='/admin/roles')
+                    div(data-i18n='Role List') Role List
+              if(user.role.permissions.includes("account_edit"))
+                li.menu-item
+                  a.menu-link(href='/admin/roles/permission')
+                    div(data-i18n='Permission') Permission
+        if(user.role.permissions.includes("account_view"))
+          li.menu-item.root-menu
+            a.menu-link.menu-toggle(href='javascript:void(0);')
+              i.menu-icon.tf-icons.bx.bx-layout
+              div(data-i18n='Accounts') Accounts
+            ul.menu-sub
+              li.menu-item
+                a.menu-link(href='/admin/accounts')
+                  div(data-i18n='Account List') Account List
+              if(user.role.permissions.includes("account_create"))
+                li.menu-item
+                  a.menu-link(href='/admin/accounts/create')
+                    div(data-i18n='Create Account') Create Account
 // / Menu

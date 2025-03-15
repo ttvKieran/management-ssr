@@ -1,4 +1,5 @@
 const Account = require('../../models/accounts.model.js');
+const Role = require('../../models/roles.model.js');
 const configSystem = require("../../configs/system.js");
 const authMethodHelper = require("../../helpers/authMethod.js")
 exports.isAuth = async (req, res, next) => {
@@ -21,6 +22,8 @@ exports.isAuth = async (req, res, next) => {
         return res.redirect(`${configSystem.prefixAdmin}/auth/login`);
     }
     else req.account = account;
+    const role = await Role.findOne({_id: account.role_id});
+    account.role = role;
     res.locals.user = account;
     next();
 };

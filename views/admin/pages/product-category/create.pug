@@ -4,89 +4,91 @@ include ../../mixins/select-tree
 block main 
     +alert-success("5000")
     +alert-error("5000")
-
-    .card.mb-4 
-        h3.card-header Add New Category
-        .card-body 
-            form(
-                action=`${prefixAdmin}/product-category/create`
-                id="form-create-category"
-                method="POST"
-                enctype="multipart/form-data"
-            )
-                .mb-3 
-                    label(class='form-label' for="title") Title
-                    input(
-                        type="text"
-                        class="form-control"
-                        id="title"
-                        name="title"
-                        placeholder="Name Category"
-                        required
-                    )
-                .mb-3 
-                    label(class='form-label' for="parent-category") PARENT CATEGORY
-                    select(
-                        class="form-select"
-                        name="parent_id"
-                        id="parent-category"
-                    )
-                        option(disabled selected) SELECT PARENT
-                        +select-tree(records, 1)
-                        
-                .mb-3
-                    label(class='form-label' for="description") Description
-                    textarea(
-                        type="text"
-                        class="form-control textarea-tinymce"
-                        id="description"
-                        name="description"
-                        rows="5"
-                    )
-                .mb-3
-                    label(class="form-label" for="thumbnail") Image
-                    input(
-                        type="file" 
-                        class="form-control"
-                        name="thumbnail"
-                        id="thumbnail"
-                        accept="image/*"
-                    )
-                .mb-3 
-                    label(class="form-label" for="position") Position
-                    input(
-                        type="number"
-                        class="form-control"
-                        id="position"
-                        name="position"
-                        placeholder="Auto increase"
-                        min="1"
-                    )
-                .mb-3.col-md 
-                    .d-block Status 
-                    .form-check.form-check-inline.mt-3 
+    if(user.role.permissions.includes("product-category_create"))
+        .card.mb-4 
+            h3.card-header Add New Category
+            .card-body 
+                form(
+                    action=`${prefixAdmin}/product-category/create`
+                    id="form-create-category"
+                    method="POST"
+                    enctype="multipart/form-data"
+                )
+                    .mb-3 
+                        label(class='form-label' for="title") Title
                         input(
-                            type="radio" 
-                            class="form-check-input" 
-                            name="status" 
-                            value="active"
-                            id="active"
-                            checked
-                        ) 
-                        label(class="form-check-label" for="active") Action
-                    .form-check.form-check-inline.mt-3 
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            name="title"
+                            placeholder="Name Category"
+                            required
+                        )
+                    .mb-3 
+                        label(class='form-label' for="parent-category") PARENT CATEGORY
+                        select(
+                            class="form-select"
+                            name="parent_id"
+                            id="parent-category"
+                        )
+                            option(disabled selected) SELECT PARENT
+                            +select-tree(records, 1)
+                            
+                    .mb-3
+                        label(class='form-label' for="description") Description
+                        textarea(
+                            type="text"
+                            class="form-control textarea-tinymce"
+                            id="description"
+                            name="description"
+                            rows="5"
+                        )
+                    .mb-3
+                        label(class="form-label" for="thumbnail") Image
                         input(
-                            type="radio" 
-                            class="form-check-input" 
-                            name="status" 
-                            value="inactive"
-                            id="inactive"
-                        ) 
-                        label(class="form-check-label" for="inactive") Pending
-                .mb-3 
-                    button(
-                        type="submit"
-                        class="btn btn-primary"
-                    ) Create
+                            type="file" 
+                            class="form-control"
+                            name="thumbnail"
+                            id="thumbnail"
+                            accept="image/*"
+                        )
+                    .mb-3 
+                        label(class="form-label" for="position") Position
+                        input(
+                            type="number"
+                            class="form-control"
+                            id="position"
+                            name="position"
+                            placeholder="Auto increase"
+                            min="1"
+                        )
+                    .mb-3.col-md 
+                        .d-block Status 
+                        .form-check.form-check-inline.mt-3 
+                            input(
+                                type="radio" 
+                                class="form-check-input" 
+                                name="status" 
+                                value="active"
+                                id="active"
+                                checked
+                            ) 
+                            label(class="form-check-label" for="active") Action
+                        .form-check.form-check-inline.mt-3 
+                            input(
+                                type="radio" 
+                                class="form-check-input" 
+                                name="status" 
+                                value="inactive"
+                                id="inactive"
+                            ) 
+                            label(class="form-check-label" for="inactive") Pending
+                    .mb-3 
+                        button(
+                            type="submit"
+                            class="btn btn-primary"
+                        ) Create
+    else 
+        h2 You do not have permission to access this page.
         
         

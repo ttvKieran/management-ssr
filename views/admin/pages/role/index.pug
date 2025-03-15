@@ -10,66 +10,72 @@ include ../../mixins/table-tree
 block main 
     +alert-success("5000")
     +alert-error("5000")
-    //- Table list
-    .row
-        .col-12.text-end
-            a.btn.btn-primary.text-white(
-                type='button'
-                href=`${prefixAdmin}/roles/create`
-            )
-                span.tf-icons.bx.bx-message-alt-add
-                | &nbsp; Add Role
-    if(roles.length > 0)
-        .card.mt-3
-            .table-responsive.text-nowrap
-                table.table
-                    thead
-                        tr
-                            th NO.
-                            th TITLE
-                            th DESCRIPTION
-                            th ACTIONS
-                    tbody.table-border-bottom-0
-                        each item, index in roles
+    if(user.role.permissions.includes("role_view"))
+        //- Table list
+        .row
+            if(user.role.permissions.includes("role_create"))
+                .col-12.text-end
+                    a.btn.btn-primary.text-white(
+                        type='button'
+                        href=`${prefixAdmin}/roles/create`
+                    )
+                        span.tf-icons.bx.bx-message-alt-add
+                        | &nbsp; Add Role
+        if(roles.length > 0)
+            .card.mt-3
+                .table-responsive.text-nowrap
+                    table.table
+                        thead
                             tr
-                                td
-                                    i.fab.fa-angular.fa-lg.me-3
-                                        strong #{index+1}
-                                td 
-                                    .text-dark #{item.title}
-                                td 
-                                    .text-dark #{item.description}
-                                td
-                                    .dropdown
-                                        button.btn.p-0.dropdown-toggle.hide-arrow(type='button' data-bs-toggle='dropdown')
-                                            i.bx.bx-dots-vertical-rounded
-                                        .dropdown-menu
-                                            a(
-                                                class="dropdown-item cursor-pointer "
-                                                href=`${prefixAdmin}/roles/edit/${item.id}`
-                                            )
-                                                i.bx.bx-edit-alt.me-1
-                                                |  Edit
-                                            button(
-                                                class="dropdown-item"
-                                                button-delete
-                                                idItem=`${item.id}`
-                                            )
-                                                i.bx.bx-trash.me-1
-                                                |  Delete
-        //- End Table list
+                                th NO.
+                                th TITLE
+                                th DESCRIPTION
+                                th ACTIONS
+                        tbody.table-border-bottom-0
+                            each item, index in roles
+                                tr
+                                    td
+                                        i.fab.fa-angular.fa-lg.me-3
+                                            strong #{index+1}
+                                    td 
+                                        .text-dark #{item.title}
+                                    td 
+                                        .text-dark #{item.description}
+                                    td
+                                        .dropdown
+                                            button.btn.p-0.dropdown-toggle.hide-arrow(type='button' data-bs-toggle='dropdown')
+                                                i.bx.bx-dots-vertical-rounded
+                                            .dropdown-menu
+                                                if(user.role.permissions.includes("role_edit"))
+                                                    a(
+                                                        class="dropdown-item cursor-pointer "
+                                                        href=`${prefixAdmin}/roles/edit/${item.id}`
+                                                    )
+                                                        i.bx.bx-edit-alt.me-1
+                                                        |  Edit
+                                                if(user.role.permissions.includes("role_delete"))
+                                                    button(
+                                                        class="dropdown-item"
+                                                        button-delete
+                                                        idItem=`${item.id}`
+                                                    )
+                                                        i.bx.bx-trash.me-1
+                                                        |  Delete
+            //- End Table list
 
-        //- Basic Pagination
-        +pagination(pagination)
-        //- End Basic Pagination
+            //- Basic Pagination
+            +pagination(pagination)
+            //- End Basic Pagination
 
-        //- Form delete
-        form(
-            action
-            method="POST"
-            id="form-delete"
-            path=`${prefixAdmin}/roles/delete`
-        )
-        //- End Form delete
+            //- Form delete
+            form(
+                action
+                method="POST"
+                id="form-delete"
+                path=`${prefixAdmin}/roles/delete`
+            )
+            //- End Form delete
+        else 
+            p There are no permission groups yet. You need to create a new.
     else 
-        p There are no permission groups yet. You need to create a new.
+        h2 You do not have permission to access this page.
