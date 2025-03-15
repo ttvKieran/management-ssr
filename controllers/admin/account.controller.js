@@ -92,7 +92,7 @@ module.exports.createGet = async(req, res) => {
 
 module.exports.createPost = async(req, res) => {
     try {
-        req.body.password = bcrypt.hashSync(req.body.password, process.env.SALT_ROUNDS);
+        req.body.password = bcrypt.hashSync(req.body.password, parseInt(process.env.SALT_ROUNDS));
         const record = new Account(req.body);
         const existEmail = await Account.findOne({email: record.email});
         if(existEmail){
@@ -133,7 +133,7 @@ module.exports.editGet = async(req, res) => {
 }
 
 module.exports.editPatch = async(req, res) => {
-    try {
+    // try {
         const existEmail = await Account.find({ _id: {$ne: req.params.id} , email: req.body.email});
         if(existEmail.length > 0){
             req.flash('error', `Email has exist`);
@@ -141,14 +141,14 @@ module.exports.editPatch = async(req, res) => {
             return;
         } else{
             if(req.body.password == "") delete req.body.password;
-            req.body.password = bcrypt.hashSync(req.body.password, process.env.SALT_ROUNDS);
+            else req.body.password = bcrypt.hashSync(req.body.password, parseInt(process.env.SALT_ROUNDS));
             await Account.updateOne({_id: req.params.id}, req.body);
         }
-    } catch (error) {
-        req.flash('error', `The account does not exist.`);
-        res.redirect('back');
-        return;
-    }
+    // } catch (error) {
+    //     req.flash('error', `The account does not exist.`);
+    //     res.redirect('back');
+    //     return;
+    // }
     
     req.flash('success', `Account edited successfully!`);
     res.redirect(`back`);

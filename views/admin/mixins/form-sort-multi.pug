@@ -1,8 +1,8 @@
 mixin form-sort-multi()
     .row.align-item.center
-        .col-8
+        .col-sm-8.col-12.p-0
             select(
-                class="form-select text-center"
+                class="form-select text-left mb-2 ms-2"
                 name="sort"
             )
                 option(value='position-desc') POSITON DESCENDING
@@ -11,8 +11,8 @@ mixin form-sort-multi()
                 option(value='price-asc') PRICE ASCENDING
                 option(value='title-asc') TITLE A - Z
                 option(value='title-desc') TITLE Z - A
-        .col-4
+        .col-4.ps-2
             button(
-                class="btn btn-danger"
+                class="btn btn-danger fs-sm-10 mb-2"
                 button-clear-sort
             ) Clear

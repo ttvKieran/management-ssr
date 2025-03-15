@@ -1,15 +1,15 @@
 mixin search(keyword)
     form(id="form-search")
-        .input-group
-            input(
+        .input-group.row.flex-wrap
+            input.col-sm-9.col-12.w-auto(
                 type="text"
                 placeholder="Enter keyword"
                 name="keyword"
-                class="form-control me-2"
+                class="form-control mb-2"
                 value=keyword
             )
-            .input-group-append
-                button(
+            .input-group-append.col-sm-3.col-4.text-end.p-0
+                button.fs-sm-10(
                 class="btn btn-primary"
                 type="submit"
                 ) Search

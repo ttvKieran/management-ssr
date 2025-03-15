@@ -19,6 +19,8 @@ module.exports.loginCheck = async (req, res) => {
             if(checkPassword){
                 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
                 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+                const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE;
+                const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
                 const dataForAccessToken = {
                     id: record._id
                 };
@@ -27,7 +29,11 @@ module.exports.loginCheck = async (req, res) => {
                     accessTokenSecret,
                     accessTokenLife,
                 );
-                let refreshToken = randToken.generate(systemConfig.refreshTokenSize);
+                let refreshToken = await authMethodHelper.generateToken(
+                    {},
+                    refreshTokenSecret,
+                    refreshTokenLife,
+                );
                 if (!record.refreshToken) {
                     await Account.updateOne({_id: record._id}, {refreshToken: refreshToken});
                 } else {
@@ -98,7 +104,8 @@ module.exports.logout = async (req, res) => {
     res.redirect(`${configSystem.prefixAdmin}/auth/login`);
 }
 
-module.exports.refreshToken = async (req, res, next) => {
+module.exports.refreshToken = async (req, res) => {
+    console.log("Refresh");
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) {
         req.flash('error', `There was an error login the account. Please try again.`);
@@ -110,10 +117,16 @@ module.exports.refreshToken = async (req, res, next) => {
         req.flash('error', `There was an error login the account. Please try again.`);
         return res.redirect(`${configSystem.prefixAdmin}/auth/login`);
     }
+    const account = await Account.findOne({refreshToken: refreshToken});
+    if(!account){
+        req.flash('error', `There was an error login the account. Please try again.`);
+        return res.redirect(`${configSystem.prefixAdmin}/auth/login`);
+    }
+    console.log("This is account: ", account);
     const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
     const dataForAccessToken = {
-        id: verified.payload.id
+        id: account._id
     };
     const accessToken = await authMethodHelper.generateToken(
         dataForAccessToken,
@@ -125,5 +138,5 @@ module.exports.refreshToken = async (req, res, next) => {
         secure: true,
         sameSite: "Strict"
     });
-    next();
+    res.redirect("back");
 };

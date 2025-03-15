@@ -15,17 +15,17 @@ block main
     .card.mb-3 
         h5.card-header Filters &amp; Search
         .card-body
-            .row.align-items-center.justify-content-between
+            .row.align-items-left.justify-content-between
                 .col-5
                     +filterStatus(filterStatus)
                 .col-5
                     +search(keyword)
                 .col-2.text-end
-                    a.btn.btn-primary.text-white(
+                    a.btn.btn-primary.text-white.fs-sm-10.p-sm-8.mb-2(
                         type='button'
                         href=`${prefixAdmin}/accounts/create`
                     )
-                        span.tf-icons.bx.bx-message-alt-add
+                        span.tf-icons.bx.bx-message-alt-add.fs-sm-10.p-sm-8.d-none.d-sm-inline
                         | &nbsp; Add
     //- End Filter & Search
 

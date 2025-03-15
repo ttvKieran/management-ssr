@@ -2,12 +2,12 @@ mixin form-change-multi(path)
     form(
         action=path
         method="POST"
-        class="row align-items-center"
+        class="row align-items-center ms-1"
         id="form-change-multi"
     )
-        .col-8
+        .col-sm-8.col-12.p-0
             select(
-                class="form-select text-center"
+                class="form-select text-center text-left mb-2"
                 name="action"
             )
                 option(disabled selected) -----SELECT ACTION-----
@@ -20,8 +20,8 @@ mixin form-change-multi(path)
                 value=""
                 class="d-none"
             )
-        .col-4
+        .col-4.p-0
             button(
-                class="btn btn-primary"
+                class="btn btn-primary fs-sm-10 mb-2 ms-1"
                 type="submit"
             ) Apply

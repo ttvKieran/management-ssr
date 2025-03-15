@@ -26,20 +26,20 @@ block main
     //- Table list
     .card
         //- Change status multi
-        .row.align-items-center
+        .row.align-items-center.p-sm-4.p-2
             .col-5
-                .card-body
+                div
                     +form-sort-multi()
                 //- End Sort
             .col-5
-                .card-body
+                div
                     +form-change-multi(`${prefixAdmin}/product-category/change-multi?_method=PATCH`)
             .col-2
-                a.btn.btn-primary.text-white(
+                a.btn.btn-primary.text-white.fs-sm-10.p-sm-8.mb-2(
                     type='button'
                     href=`${prefixAdmin}/product-category/create`
                 )
-                    span.tf-icons.bx.bx-message-alt-add
+                    span.tf-icons.bx.bx-message-alt-add.fs-sm-10.p-sm-8.d-none.d-sm-inline
                     | &nbsp; Add
         //- End Change status multi
         .table-responsive.text-nowrap

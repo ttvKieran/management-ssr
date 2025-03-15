@@ -11,12 +11,16 @@ exports.isAuth = async (req, res, next) => {
     const verified = await authMethodHelper.verifyToken(accessToken, accessTokenSecret);
     if(!verified) {
         return res.redirect(`${configSystem.prefixAdmin}/auth/refresh-token`);
+        // req.flash('error', `Account not exist.`);
+        // return res.redirect(`${configSystem.prefixAdmin}/auth/login`);
     }
+    console.log("This is verified", verified);
     const account = await Account.findOne({_id: verified.payload.id});
     if(!account){
         req.flash('error', `Account not exist.`);
         return res.redirect(`${configSystem.prefixAdmin}/auth/login`);
     }
     else req.account = account;
+    res.locals.user = account;
     next();
 };

@@ -49,3 +49,12 @@
     display: none;
   }
   /* End Image Preview */
+
+  @media (max-width: 576px) { /* Áp dụng cho sm hoặc nhỏ hơn */
+    .fs-sm-10 {
+      font-size: 10px !important;
+    }
+    .p-sm-8{
+      padding: 8px !important;
+    }
+  }
