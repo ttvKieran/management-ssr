@@ -34,11 +34,7 @@ module.exports.loginCheck = async (req, res) => {
                     refreshTokenSecret,
                     refreshTokenLife,
                 );
-                if (!record.refreshToken) {
-                    await Account.updateOne({_id: record._id}, {refreshToken: refreshToken});
-                } else {
-                    refreshToken = record.refreshToken;
-                }
+                await Account.updateOne({_id: record._id}, {refreshToken: refreshToken});
                 res.cookie("accessToken", accessToken, {
                     httpOnly: true, 
                     secure: true,
@@ -105,7 +101,6 @@ module.exports.logout = async (req, res) => {
 }
 
 module.exports.refreshToken = async (req, res) => {
-    console.log("Refresh");
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) {
         req.flash('error', `There was an error login the account. Please try again.`);
@@ -122,7 +117,6 @@ module.exports.refreshToken = async (req, res) => {
         req.flash('error', `There was an error login the account. Please try again.`);
         return res.redirect(`${configSystem.prefixAdmin}/auth/login`);
     }
-    console.log("This is account: ", account);
     const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
     const dataForAccessToken = {

@@ -3,6 +3,7 @@ const filterStatusHelper = require('../../helpers/filterStatus');
 const searchHelper = require('../../helpers/search');
 const paginationtHelper = require('../../helpers/pagination');
 const configSystem = require("../../configs/system.js");
+const Account = require('../../models/accounts.model.js');
 
 module.exports.index = async (req, res) => {
     const find = {
@@ -64,7 +65,11 @@ module.exports.changeStatus = async(req, res) => {
     const params = req.params;
     const id = params.id;
     const status = params.status;
-    await Product.updateOne({_id: id}, {status: status});
+    const updatedBy = {
+        account_id: res.locals.user._id,
+        updatedAt: Date.now()
+    }
+    await Product.updateOne({_id: id}, {status: status, $push: { updatedBy: updatedBy }});
     req.flash('success', 'The product status has been updated successfully.');
     res.redirect('back');
 }
@@ -72,26 +77,33 @@ module.exports.changeStatus = async(req, res) => {
 module.exports.changeMulti = async(req, res) => {
     const action = req.body.action;
     const ids = req.body.ids.split(", ");
+    const updatedBy = {
+        account_id: res.locals.user._id,
+        updatedAt: Date.now()
+    }
     switch(action){
         case "active":
-            await Product.updateMany({_id: {$in: ids}}, {status: "active"});
+            await Product.updateMany({_id: {$in: ids}}, {status: "active", $push: { updatedBy: updatedBy }});
             req.flash('success', `The status of ${ids.length} products has been updated successfully.`);
             break;
         case "inactive":
-            await Product.updateMany({_id: {$in: ids}}, {status: "inactive"});
+            await Product.updateMany({_id: {$in: ids}}, {status: "inactive", $push: { updatedBy: updatedBy }});
             req.flash('success', `The status of ${ids.length} products has been updated successfully.`);
             break;
         case "delete":
             await Product.updateMany({_id: {$in: ids}}, {
                 deleted: true,
-                deletedAt: new Date()
+                deletedBy: {
+                    account_id: res.locals.user._id,
+                    deletedAt: Date.now()
+                }
             });
             req.flash('success', `Successfully deleted ${ids.length} products.`);
             break;
         case "position":
             for(item of ids){
                 const [id, position] = item.split("-");
-                await Product.updateOne({_id: id}, {position: position});
+                await Product.updateOne({_id: id}, {position: position, $push: { updatedBy: updatedBy }});
             }
             req.flash('success', `The position of ${ids.length} products has been updated successfully.`);
             break;
@@ -106,7 +118,10 @@ module.exports.delete = async(req, res) => {
     const id = params.id;
     await Product.updateOne({_id: id}, {
         deleted: true,
-        deletedAt: new Date()
+        deletedBy: {
+            account_id: res.locals.user._id,
+            deletedAt: Date.now()
+        }
     });
     req.flash('success', 'Successfully deleted product.');
     res.redirect('back');
@@ -123,7 +138,9 @@ module.exports.createPost = async(req, res) => {
         const countRecord = await Product.countDocuments();
         req.body.position = countRecord + 1;
     }
-
+    req.body.createdBy = {
+        account_id: res.locals.user._id
+    }
     const newRecord = new Product(req.body);
     await newRecord.save();
 
@@ -157,7 +174,14 @@ module.exports.editPatch = async(req, res) => {
     }
 
     try {
-        await Product.updateOne({_id: req.params.id}, req.body);
+        const updatedBy = {
+            account_id: res.locals.user._id,
+            updatedAt: Date.now()
+        }
+        await Product.updateOne({_id: req.params.id}, {
+            ...req.body,
+            $push: { updatedBy: updatedBy }
+        });
     } catch (error) {
         req.flash('error', `The product does not exist.`);
         res.redirect('back');
@@ -176,9 +200,11 @@ module.exports.detail = async(req, res) => {
     }
     try {
         const record = await Product.findOne(find);
+        const user = await Account.findOne({_id: record.createdBy.account_id});
         res.render('admin/pages/product/detail', {
             titlePage: "Detail Product",
-            product: record
+            product: record,
+            userCreate: user
         });
     } catch (error) {
         req.flash('error', `The product does not exist.`);

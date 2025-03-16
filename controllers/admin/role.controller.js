@@ -33,7 +33,10 @@ module.exports.delete = async(req, res) => {
     try {
         await Role.updateOne({_id: id}, {
             deleted: true,
-            deletedAt: new Date()
+            deletedBy: {
+                account_id: res.locals.user._id,
+                deletedAt: Date.now()
+            }
         });
     } catch (error) {
         req.flash('error', `The role does not exist.`);
@@ -51,6 +54,9 @@ module.exports.createGet = async(req, res) => {
 }
 
 module.exports.createPost = async(req, res) => {
+    req.body.createdBy = {
+        account_id: res.locals.user._id
+    }
     const record = new Role(req.body);
     try {
         await record.save();
@@ -85,13 +91,19 @@ module.exports.editGet = async(req, res) => {
 
 module.exports.editPatch = async(req, res) => {
     try {
-        await Role.updateOne({_id: req.params.id}, req.body);
+        const updatedBy = {
+            account_id: res.locals.user._id,
+            updatedAt: Date.now()
+        }
+        await Role.updateOne({_id: req.params.id}, {
+            ...req.body,
+            $push: { updatedBy: updatedBy }
+        });
     } catch (error) {
         req.flash('error', `The role does not exist.`);
         res.redirect('back');
         return;
     }
-    
     req.flash('success', `Role edited successfully!`);
     res.redirect(`back`);
 }
@@ -118,7 +130,11 @@ module.exports.permissionPatch = async(req, res) => {
     try {
         permissions.forEach(async permission => {
             if(!("permissions" in permission)) permission.permissions = [];
-            await Role.updateOne({_id: permission.id}, {permissions: permission.permissions});
+            const updatedBy = {
+                account_id: res.locals.user._id,
+                updatedAt: Date.now()
+            }
+            await Role.updateOne({_id: permission.id}, {permissions: permission.permissions, $push: { updatedBy: updatedBy }});
         });
     } catch (error) {
         req.flash('error', `The Permission does not exist.`);

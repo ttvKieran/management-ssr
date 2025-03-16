@@ -16,18 +16,18 @@ block main
         h5.card-header Filters &amp; Search
         .card-body
             .row.align-items-left.justify-content-between
-                .col-5
+                .col-md-5.col-4
                     +filterStatus(filterStatus)
-                .col-5
+                .col-md-5.col-4
                     +search(keyword)
                 if(user.role.permissions.includes("account_create"))
-                    .col-2.text-end
-                        a.btn.btn-primary.text-white.fs-sm-10.p-sm-8.mb-2(
+                    .col-md-2.col-3.p-0.text-end
+                        a.btn.btn-primary.text-white.p-sm-8(
                             type='button'
                             href=`${prefixAdmin}/accounts/create`
                         )
-                            span.tf-icons.bx.bx-message-alt-add.fs-sm-10.p-sm-8.d-none.d-sm-inline
-                            | &nbsp; Add
+                            span.tf-icons.bx.bx-message-alt-add.d-inline.me-1.p-0
+                            span Add
     //- End Filter & Search
 
     //- Table product list

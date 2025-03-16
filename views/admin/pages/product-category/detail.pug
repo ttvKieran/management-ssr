@@ -16,15 +16,16 @@ block main
                             p.card-text.w-75 Description: !{productCategory.description}
                             p.card-text Position: #{productCategory.position}
                             p.card-text Parent Category: #{parent_category.title}
-                            p.card-text.d-inline.me-2 Status: 
+                            p.card-text.d-inline.me-3 Status: 
                             if(productCategory.status=="active")
                                 span(
-                                    class="badge bg-label-primary me-1 cursor-pointer" 
+                                    class="badge bg-label-primary me-1 cursor-pointer mb-3" 
                                 ) Active
                             else 
                                 span(
-                                    class="badge bg-label-warning me-1 cursor-pointer"
+                                    class="badge bg-label-warning me-1 cursor-pointer mb-3"
                                 ) Pending
+                            p.card-text Created By: #{user.fullname}, At: #{moment(productCategory.createdBy.createdAt).format('DD/MM/YYYY h:mm:ss')}
                             .mt-5 
                                 a(
                                     class="btn btn-primary"

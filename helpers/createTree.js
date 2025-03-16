@@ -1,5 +1,5 @@
 let count = 1;
-function createTree(arr, parentId = ""){
+function createTree(arr, parentId){
     const tree = [];
     arr.forEach(item => {
         if(item.parent_id === parentId){

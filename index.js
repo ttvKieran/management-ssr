@@ -7,6 +7,7 @@ const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
+const moment = require('moment');
 
 const app = express();
 const port = 3000;
@@ -35,6 +36,7 @@ app.set('view engine', 'pug');
 
 //Local variable
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 
 database.connect();
 

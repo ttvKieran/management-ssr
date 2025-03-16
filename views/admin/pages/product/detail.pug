@@ -19,15 +19,16 @@ block main
                                 small.text-muted Discount Percentage: #{product.discountPercentage}%
                             p.card-text Position: #{product.position}
                             p.card-text Stock: #{product.stock}
-                            p.card-text.d-inline.me-2 Status: 
+                            p.card-text.d-inline.me-3 Status: 
                             if(product.status=="active")
                                 span(
-                                    class="badge bg-label-primary me-1 cursor-pointer" 
+                                    class="badge bg-label-primary me-1 cursor-pointer mb-3" 
                                 ) Active
                             else 
                                 span(
-                                    class="badge bg-label-warning me-1 cursor-pointer"
+                                    class="badge bg-label-warning me-1 cursor-pointer mb-3"
                                 ) Pending
+                            p.card-text Created By: #{user.fullname}, At: #{moment(product.createdBy.createdAt).format('DD/MM/YYYY h:mm:ss')}
                             .mt-5 
                                 a(
                                     class="btn btn-primary"

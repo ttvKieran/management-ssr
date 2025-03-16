@@ -26,23 +26,23 @@ block main
         //- Table list
         .card
             //- Change status multi
-            .row.align-items-center.p-sm-4.p-2
-                .col-5
+            .row.m-0.p-sm-4.p-2
+                .col-md-5.col-4.p-0
                     div
                         +form-sort-multi()
                     //- End Sort
                 if(user.role.permissions.includes("product-category_edit"))
-                    .col-5
+                    .col-5.p-0
                         div
                             +form-change-multi(`${prefixAdmin}/product-category/change-multi?_method=PATCH`)
                 if(user.role.permissions.includes("product-category_create"))
-                    .col-2
-                        a.btn.btn-primary.text-white.fs-sm-10.p-sm-8.mb-2(
+                    .col-md-2.col-3.p-0.text-end
+                        a.btn.btn-primary.text-white.p-sm-8(
                             type='button'
                             href=`${prefixAdmin}/product-category/create`
                         )
-                            span.tf-icons.bx.bx-message-alt-add.fs-sm-10.p-sm-8.d-none.d-sm-inline
-                            | &nbsp; Add
+                            span.tf-icons.bx.bx-message-alt-add.d-inline.me-1.p-0
+                            span Add
             //- End Change status multi
             .table-responsive.text-nowrap
                 table.table

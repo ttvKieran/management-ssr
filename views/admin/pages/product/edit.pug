@@ -3,7 +3,7 @@ include ../../mixins/alert
 block main 
     +alert-success("5000")
     +alert-error("5000")
-    if(user.role.permissions.includes("product_edit))
+    if(user.role.permissions.includes("product_edit"))
         .card.mb-4 
             h3.card-header Edit Product
             .card-body 

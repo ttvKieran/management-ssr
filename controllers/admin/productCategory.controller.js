@@ -1,4 +1,5 @@
 const ProductCategory = require('../../models/product-category.model');
+const Account = require('../../models/accounts.model.js');
 const filterStatusHelper = require('../../helpers/filterStatus');
 const searchHelper = require('../../helpers/search.js');
 const paginationtHelper = require('../../helpers/pagination');
@@ -22,7 +23,7 @@ module.exports.index = async (req, res) => {
     const totalRecord = await ProductCategory.countDocuments(find);
     const paginationRecord = paginationtHelper(
         {
-            limit: 5,
+            limit: 15,
             currentPage: 1
         },
         req.query,
@@ -52,9 +53,7 @@ module.exports.index = async (req, res) => {
     .limit(paginationRecord.limit)
     .skip(paginationRecord.skip)
     .sort(sort);
-
     const recordTree = createTreeHelper.create(records, "");
-
     res.render('admin/pages/product-category/index', {
         titlePage: "Product Category",
         productCategory: recordTree,
@@ -68,7 +67,11 @@ module.exports.changeStatus = async(req, res) => {
     const params = req.params;
     const id = params.id;
     const status = params.status;
-    await ProductCategory.updateOne({_id: id}, {status: status});
+    const updatedBy = {
+        account_id: res.locals.user._id,
+        updatedAt: Date.now()
+    }
+    await ProductCategory.updateOne({_id: id}, {status: status, $push: { updatedBy: updatedBy }});
     req.flash('success', 'The product category status has been updated successfully.');
     res.redirect('back');
 }
@@ -76,26 +79,33 @@ module.exports.changeStatus = async(req, res) => {
 module.exports.changeMulti = async(req, res) => {
     const action = req.body.action;
     const ids = req.body.ids.split(", ");
+    const updatedBy = {
+        account_id: res.locals.user._id,
+        updatedAt: Date.now()
+    }
     switch(action){
         case "active":
-            await ProductCategory.updateMany({_id: {$in: ids}}, {status: "active"});
+            await ProductCategory.updateMany({_id: {$in: ids}}, {status: "active", $push: { updatedBy: updatedBy }});
             req.flash('success', `The status of ${ids.length} product category has been updated successfully.`);
             break;
         case "inactive":
-            await ProductCategory.updateMany({_id: {$in: ids}}, {status: "inactive"});
+            await ProductCategory.updateMany({_id: {$in: ids}}, {status: "inactive", $push: { updatedBy: updatedBy }});
             req.flash('success', `The status of ${ids.length} product category has been updated successfully.`);
             break;
         case "delete":
             await ProductCategory.updateMany({_id: {$in: ids}}, {
                 deleted: true,
-                deletedAt: new Date()
+                deletedBy: {
+                    account_id: res.locals.user._id,
+                    deletedAt: Date.now()
+                }
             });
             req.flash('success', `Successfully deleted ${ids.length} product category.`);
             break;
         case "position":
             for(item of ids){
                 const [id, position] = item.split("-");
-                await ProductCategory.updateOne({_id: id}, {position: position});
+                await ProductCategory.updateOne({_id: id}, {position: position, $push: { updatedBy: updatedBy }});
             }
             req.flash('success', `The position of ${ids.length} product category has been updated successfully.`);
             break;
@@ -110,7 +120,10 @@ module.exports.delete = async(req, res) => {
     const id = params.id;
     await ProductCategory.updateOne({_id: id}, {
         deleted: true,
-        deletedAt: new Date()
+        deletedBy: {
+            account_id: res.locals.user._id,
+            deletedAt: Date.now()
+        }
     });
     req.flash('success', 'Successfully deleted product category.');
     res.redirect('back');
@@ -133,7 +146,9 @@ module.exports.createPost = async(req, res) => {
         const countRecord = await ProductCategory.countDocuments();
         req.body.position = countRecord + 1;
     }
-
+    req.body.createdBy = {
+        account_id: res.locals.user._id
+    }
     const newRecord = new ProductCategory(req.body);
     await newRecord.save();
 
@@ -170,7 +185,14 @@ module.exports.editPatch = async(req, res) => {
     }
 
     try {
-        await ProductCategory.updateOne({_id: req.params.id}, req.body);
+        const updatedBy = {
+            account_id: res.locals.user._id,
+            updatedAt: Date.now()
+        }
+        await ProductCategory.updateOne({_id: req.params.id}, {
+            ...req.body,
+            $push: { updatedBy: updatedBy }
+        });
     } catch (error) {
         req.flash('error', `The product category does not exist.`);
         res.redirect('back');
@@ -190,13 +212,15 @@ module.exports.detail = async(req, res) => {
     try {
         const record = await ProductCategory.findOne(find);
         let record_parent = {title: "No have parent"};
+        const user = await Account.findOne({_id: record.createdBy.account_id});
         if(record.parent_id){
             record_parent = await ProductCategory.findOne({_id: record.parent_id});
         }
         res.render('admin/pages/product-category/detail', {
             titlePage: "Detail Product Category",
             productCategory: record,
-            parent_category: record_parent
+            parent_category: record_parent,
+            userCreate: user
         });
     } catch (error) {
         req.flash('error', `The product category does not exist.`);

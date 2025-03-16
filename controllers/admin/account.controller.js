@@ -66,7 +66,11 @@ module.exports.changeStatus = async(req, res) => {
     const params = req.params;
     const id = params.id;
     const status = params.status;
-    await Account.updateOne({_id: id}, {status: status});
+    const updatedBy = {
+        account_id: res.locals.user._id,
+        updatedAt: Date.now()
+    }
+    await Account.updateOne({_id: id}, {status: status, $push: { updatedBy: updatedBy }});
     req.flash('success', 'The account status has been updated successfully.');
     res.redirect('back');
 }
@@ -76,7 +80,10 @@ module.exports.delete = async(req, res) => {
     const id = params.id;
     await Account.updateOne({_id: id}, {
         deleted: true,
-        deletedAt: new Date()
+        deletedBy: {
+            account_id: res.locals.user._id,
+            deletedAt: Date.now()
+        }
     });
     req.flash('success', 'Successfully deleted account.');
     res.redirect('back');
@@ -94,6 +101,9 @@ module.exports.createPost = async(req, res) => {
     try {
         req.body.password = bcrypt.hashSync(req.body.password, parseInt(process.env.SALT_ROUNDS));
         const record = new Account(req.body);
+        req.body.createdBy = {
+            account_id: res.locals.user._id
+        }
         const existEmail = await Account.findOne({email: record.email});
         if(existEmail){
             req.flash('error', `Email has exist`);
@@ -133,7 +143,7 @@ module.exports.editGet = async(req, res) => {
 }
 
 module.exports.editPatch = async(req, res) => {
-    // try {
+    try {
         const existEmail = await Account.find({ _id: {$ne: req.params.id} , email: req.body.email});
         if(existEmail.length > 0){
             req.flash('error', `Email has exist`);
@@ -142,13 +152,20 @@ module.exports.editPatch = async(req, res) => {
         } else{
             if(req.body.password == "") delete req.body.password;
             else req.body.password = bcrypt.hashSync(req.body.password, parseInt(process.env.SALT_ROUNDS));
-            await Account.updateOne({_id: req.params.id}, req.body);
+            const updatedBy = {
+                account_id: res.locals.user._id,
+                updatedAt: Date.now()
+            }
+            await Account.updateOne({_id: req.params.id}, {
+                ...req.body,
+                $push: { updatedBy: updatedBy }
+            });
         }
-    // } catch (error) {
-    //     req.flash('error', `The account does not exist.`);
-    //     res.redirect('back');
-    //     return;
-    // }
+    } catch (error) {
+        req.flash('error', `The account does not exist.`);
+        res.redirect('back');
+        return;
+    }
     
     req.flash('success', `Account edited successfully!`);
     res.redirect(`back`);
