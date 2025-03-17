@@ -1,3 +1,4 @@
+include ../mixins/sub-menu
 header
   .container-fluid
     .row.py-3.border-bottom
@@ -8,11 +9,52 @@ header
       .col-sm-6.offset-sm-2.offset-md-0.col-lg-5.d-none.d-lg-block
         .search-bar.row.bg-light.p-2.my-2.rounded-4
           .col-md-4.d-none.d-md-block
-            select.form-select.border-0.bg-transparent
-              option All Categories
-              option Groceries
-              option Drinks
-              option Chocolates
+            ul.p-0.m-0.drop-category
+              li
+                -const pathProduct = "/products"
+                a.active.dropdown-icon(href=pathProduct) Product Category
+                +sub-menu(productCategory, pathProduct, false)
+              //- li
+                a.active.dropdown-icon(href='#') Data Science
+                ul.submenu
+                  li
+                    a(href='#') Python Tutorial
+                  li
+                    a(href='#') R Tutorial
+                  li
+                    a(href='#') Machine Learning
+                  li
+                    a(href='#') Data Science using Python
+                  li
+                    a(href='#') Data Science using R
+                  li.has-nested
+                    a(href='#') Data Science Packages
+                    ul.nested-submenu
+                      li
+                        a(href='#') Pandas Tutorial
+                      li
+                        a(href='#') NumPy Tutorial
+                  li.has-nested
+                    a(href='#') Data Visualization
+                    ul.nested-submenu
+                      li
+                        a(href='#') Matplotlib
+                      li
+                        a(href='#') Seaborn
+                      li
+                        a(href='#') Plotly
+                  li.has-nested
+                    a(href='#') Data Analysis
+                    ul.nested-submenu
+                      li
+                        a(href='#') Exploratory Data Analysis
+                      li
+                        a(href='#') Statistical Analysis
+                  li
+                    a(href='#') Deep Learning
+                  li
+                    a(href='#') NLP Tutorial
+
           .col-11.col-md-7
             form#search-form.text-center(action='index.html' method='post')
               input.form-control.border-0.bg-transparent(type='text' placeholder='Search for more than 20,000 products')
