@@ -14,46 +14,6 @@ header
                 -const pathProduct = "/products"
                 a.active.dropdown-icon(href=pathProduct) Product Category
                 +sub-menu(productCategory, pathProduct, false)
-              //- li
-                a.active.dropdown-icon(href='#') Data Science
-                ul.submenu
-                  li
-                    a(href='#') Python Tutorial
-                  li
-                    a(href='#') R Tutorial
-                  li
-                    a(href='#') Machine Learning
-                  li
-                    a(href='#') Data Science using Python
-                  li
-                    a(href='#') Data Science using R
-                  li.has-nested
-                    a(href='#') Data Science Packages
-                    ul.nested-submenu
-                      li
-                        a(href='#') Pandas Tutorial
-                      li
-                        a(href='#') NumPy Tutorial
-                  li.has-nested
-                    a(href='#') Data Visualization
-                    ul.nested-submenu
-                      li
-                        a(href='#') Matplotlib
-                      li
-                        a(href='#') Seaborn
-                      li
-                        a(href='#') Plotly
-                  li.has-nested
-                    a(href='#') Data Analysis
-                    ul.nested-submenu
-                      li
-                        a(href='#') Exploratory Data Analysis
-                      li
-                        a(href='#') Statistical Analysis
-                  li
-                    a(href='#') Deep Learning
-                  li
-                    a(href='#') NLP Tutorial
 
           .col-11.col-md-7
             form#search-form.text-center(action='index.html' method='post')

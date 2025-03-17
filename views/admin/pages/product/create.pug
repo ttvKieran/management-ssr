@@ -103,6 +103,27 @@ block main
                                 id="inactive"
                             ) 
                             label(class="form-check-label" for="inactive") Pending
+                    .mb-3.col-md 
+                        .d-block Featured 
+                        .form-check.form-check-inline.mt-3 
+                            input(
+                                type="radio" 
+                                class="form-check-input" 
+                                name="featured" 
+                                value="1"
+                                id="featured-1"
+                                checked
+                            ) 
+                            label(class="form-check-label" for="featured-1") Yes
+                        .form-check.form-check-inline.mt-3 
+                            input(
+                                type="radio" 
+                                class="form-check-input" 
+                                name="featured" 
+                                value="0"
+                                id="featured-0"
+                            ) 
+                            label(class="form-check-label" for="featured-0") No
                     .mb-3 
                         button(
                             type="submit"
