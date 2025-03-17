@@ -185,6 +185,13 @@ if(inputUploadImage){
         }
     }); 
 }
+const buttonResetPreviewImage = document.querySelector("span[button-reset-preiview-image]");
+if(buttonResetPreviewImage){
+    buttonResetPreviewImage.addEventListener("click", () => {
+        const avatar = document.getElementById("uploadedAvatar");
+        avatar.src = buttonResetPreviewImage.getAttribute("user-avatar");
+    });
+}
   /* End Image Preview */
 
 // Sort Multi 

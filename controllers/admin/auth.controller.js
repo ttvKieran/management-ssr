@@ -100,7 +100,7 @@ module.exports.logout = async (req, res) => {
     res.redirect(`${configSystem.prefixAdmin}/auth/login`);
 }
 
-module.exports.refreshToken = async (req, res) => {
+module.exports.refreshToken = async (req, res, next) => {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) {
         req.flash('error', `There was an error login the account. Please try again.`);

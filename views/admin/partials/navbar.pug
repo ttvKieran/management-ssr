@@ -23,21 +23,21 @@ nav#layout-navbar.layout-navbar.container-xxl.navbar.navbar-expand-xl.navbar-det
             li.nav-item.navbar-dropdown.dropdown-user.dropdown
                 a.nav-link.dropdown-toggle.hide-arrow(href='javascript:void(0);' data-bs-toggle='dropdown')
                     .avatar.avatar-online
-                        img.w-px-40.h-auto.rounded-circle(src='/admin/assets/img/avatars/1.png' alt='')
+                        img.w-px-40.h-px-40.rounded-circle(src=user.avatar alt='')
                 ul.dropdown-menu.dropdown-menu-end
                     li
                         a.dropdown-item(href='#')
                             .d-flex
                                 .flex-shrink-0.me-3
                                     .avatar.avatar-online
-                                        img.w-px-40.h-auto.rounded-circle(src='/admin/assets/img/avatars/1.png' alt='')
+                                        img.w-px-40.h-px-40.rounded-circle(src=user.avatar alt='')
                                 .flex-grow-1
                                     span.fw-semibold.d-block John Doe
                                     small.text-muted Admin
                     li
                         .dropdown-divider
                     li
-                        a.dropdown-item(href='#')
+                        a.dropdown-item(href=`${prefixAdmin}/my-profile`)
                             i.bx.bx-user.me-2
                             span.align-middle My Profile
                     li

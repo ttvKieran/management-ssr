@@ -12,7 +12,7 @@ block main
                 class="btn btn-primary mb-3"
                 button-submit
             ) Update
-        table.table.table-hover-table-sm(table-change-permission)
+        table.table.table-hover-table-sm.table-striped.table-borderless.border-bottom(table-change-permission)
             thead
                 tr 
                     th Feature 
@@ -33,22 +33,22 @@ block main
                     td View 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 tr(data-name="product_create")
                     td Create 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 tr(data-name="product_edit")
                     td Edit 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 tr(data-name="product_delete")
                     td Delete 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 
                 tr(data-name="id")
                     td.mt-3
@@ -57,22 +57,22 @@ block main
                     td View 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 tr(data-name="product-category_create")
                     td Create 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 tr(data-name="product-category_edit")
                     td Edit 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 tr(data-name="product-category_delete")
                     td Delete 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 
                 tr(data-name="id")
                     td.mt-3
@@ -81,27 +81,27 @@ block main
                     td View 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 tr(data-name="role_create")
                     td Create 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 tr(data-name="role_edit")
                     td Edit 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 tr(data-name="role_delete")
                     td Delete 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 tr(data-name="role_permission")
                     td Permission 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
 
                 tr(data-name="id")
                     td.mt-3
@@ -110,22 +110,22 @@ block main
                     td View 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 tr(data-name="account_create")
                     td Create 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 tr(data-name="account_edit")
                     td Edit 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
                 tr(data-name="account_delete")
                     td Delete 
                     each item in roles
                         td.text-center 
-                            input(type="checkbox")
+                            input.form-check-input(type="checkbox")
         form.d-none(
             id="form-change-permission"
             method="POST"
