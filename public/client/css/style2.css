@@ -1,4 +1,4 @@
-.product-item h4{
+.product-item h3{
   height: 2.5em; /* Giới hạn chiều cao trong khoảng 2 dòng văn bản */
   overflow: hidden; /* Ẩn phần vượt quá */
   text-overflow: ellipsis; /* Hiển thị dấu "..." nếu tên quá dài */

@@ -1,9 +1,11 @@
 const Product = require('../../models/products.model.js');
+const ProductCategory = require('../../models/product-category.model');
 const filterStatusHelper = require('../../helpers/filterStatus');
 const searchHelper = require('../../helpers/search');
 const paginationtHelper = require('../../helpers/pagination');
 const configSystem = require("../../configs/system.js");
 const Account = require('../../models/accounts.model.js');
+const createTreeHelper = require("../../helpers/createTree.js");
 
 module.exports.index = async (req, res) => {
     const find = {
@@ -128,8 +130,14 @@ module.exports.delete = async(req, res) => {
 }
 
 module.exports.createGet = async(req, res) => {
+    const find = {
+        deleted: false
+    };
+    const records = await ProductCategory.find(find);
+    const recordTree = createTreeHelper.create(records, "");
     res.render('admin/pages/product/create', {
-        titlePage: "Create Product"
+        titlePage: "Create Product",
+        records: recordTree
     });
 }
 
@@ -156,9 +164,12 @@ module.exports.editGet = async(req, res) => {
     }
     try {
         const record = await Product.findOne(find);
+        const records = await ProductCategory.find({deleted: false});
+        const recordTree = createTreeHelper.create(records, "");
         res.render('admin/pages/product/edit', {
             titlePage: "Edit Product",
-            product: record
+            product: record,
+            recordTree: recordTree
         });
     } catch (error) {
         req.flash('error', `The product does not exist.`);

@@ -1,4 +1,136 @@
 extend ../../layouts/default
+include ../../mixins/product-tab.pug
+include ../../mixins/product-carousel.pug
+include ../../mixins/category-carousel.pug
+include ../../mixins/section-blog.pug
+
 
 block main 
-    h1 #{titlePage}
+  section.py-3(style="background-image: url('/client/images/background-pattern.jpg');background-repeat: no-repeat;background-size: cover;")
+    .container-fluid
+      .row
+        .col-md-12
+          .banner-blocks
+            .banner-ad.large.bg-info.block-1
+              .swiper.main-swiper
+                .swiper-wrapper
+                  .swiper-slide
+                    .row.banner-content.p-5
+                      .content-wrapper.col-md-7
+                        .categories.my-3 100% natural
+                        h3.display-4 Fresh Smoothie &amp; Summer Juice
+                        p
+                          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.
+                        a.btn.btn-outline-dark.btn-lg.text-uppercase.fs-6.rounded-1.px-4.py-3.mt-3(href='#') Shop Now
+                      .img-wrapper.col-md-5
+                        img.img-fluid(src='/client/images/product-thumb-1.png')
+                  .swiper-slide
+                    .row.banner-content.p-5
+                      .content-wrapper.col-md-7
+                        .categories.mb-3.pb-3 100% natural
+                        h3.banner-title Fresh Smoothie &amp; Summer Juice
+                        p
+                          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.
+                        a.btn.btn-outline-dark.btn-lg.text-uppercase.fs-6.rounded-1(href='#') Shop Collection
+                      .img-wrapper.col-md-5
+                        img.img-fluid(src='/client/images/product-thumb-1.png')
+                  .swiper-slide
+                    .row.banner-content.p-5
+                      .content-wrapper.col-md-7
+                        .categories.mb-3.pb-3 100% natural
+                        h3.banner-title Heinz Tomato Ketchup
+                        p
+                          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.
+                        a.btn.btn-outline-dark.btn-lg.text-uppercase.fs-6.rounded-1(href='#') Shop Collection
+                      .img-wrapper.col-md-5
+                        img.img-fluid(src='/client/images/product-thumb-2.png')
+                .swiper-pagination
+            .banner-ad.bg-success-subtle.block-2(style="background:url('/client/images/ad-image-1.png') no-repeat;background-position: right bottom")
+              .row.banner-content.p-5
+                .content-wrapper.col-md-7
+                  .categories.sale.mb-3.pb-3 20% off
+                  h3.banner-title Fruits &amp; Vegetables
+                  a.d-flex.align-items-center.nav-link(href='#')
+                    | Shop Collection 
+                    svg(width='24' height='24')
+                      use(xlink:href='#arrow-right')
+            .banner-ad.bg-danger.block-3(style="background:url('/client/images/ad-image-2.png') no-repeat;background-position: right bottom")
+              .row.banner-content.p-5
+                .content-wrapper.col-md-7
+                  .categories.sale.mb-3.pb-3 15% off
+                  h3.item-title Baked Products
+                  a.d-flex.align-items-center.nav-link(href='#')
+                    | Shop Collection 
+                    svg(width='24' height='24')
+                      use(xlink:href='#arrow-right')
+          // / Banner Blocks
+  
+  section.py-5.overflow-hidden
+    .container-fluid
+      +category-carousel("Category", productCategory)
+
+  section.overflow-hidden
+    .container-fluid
+      +product-carousel("Featured products", productFeatured)
+
+  section.py-5
+    .container-fluid
+      .row
+        .col-md-6
+          .banner-ad.bg-danger.mb-3(style="background: url('/client/images/ad-image-3.png');background-repeat: no-repeat;background-position: right bottom;")
+            .banner-content.p-5
+              .categories.text-primary.fs-3.fw-bold Upto 25% Off
+              h3.banner-title Luxa Dark Chocolate
+              p Very tasty &amp; creamy vanilla flavour creamy muffins.
+              a.btn.btn-dark.text-uppercase(href='#') Show Now
+        .col-md-6
+          .banner-ad.bg-info(style="background: url('/client/images/ad-image-4.png');background-repeat: no-repeat;background-position: right bottom;")
+            .banner-content.p-5
+              .categories.text-primary.fs-3.fw-bold Upto 25% Off
+              h3.banner-title Creamy Muffins
+              p Very tasty &amp; creamy vanilla flavour creamy muffins.
+              a.btn.btn-dark.text-uppercase(href='#') Show Now
+  
+  section
+    .container-fluid
+      +product-tab("Lastest products", lastestProduct)
+
+  section.py-5
+    .container-fluid
+      .bg-secondary.py-5.my-5.rounded-5(style="background: url('/client/images/bg-leaves-img-pattern.png') no-repeat;")
+        .container.my-5
+          .row
+            .col-md-6.p-5
+              .section-header
+                h2.section-title.display-4
+                  | Get 
+                  span.text-primary 25% Discount
+                  |  on your first purchase
+              p
+                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dictumst amet, metus, sit massa posuere maecenas. At tellus ut nunc amet vel egestas.
+            .col-md-6.p-5
+              form
+                .mb-3
+                  label.form-label(for='name') Name
+                  input#name.form-control.form-control-lg(type='text' name='name' placeholder='Name')
+                .mb-3
+                  label.form-label(for='') Email
+                  input#email.form-control.form-control-lg(type='email' name='email' placeholder='abc@mail.com')
+                .form-check.form-check-inline.mb-3
+                  label.form-check-label(for='subscribe')
+                    input#subscribe.form-check-input(type='checkbox' value='subscribe')
+                    |                     Subscribe to the newsletter
+                .d-grid.gap-2
+                  button.btn.btn-dark.btn-lg(type='submit') Submit
+  
+  +section-blog("Our product blogs", blogs)
+
+  section.py-5.my-5
+    include ../../partials/hero-banner
+
+  section.py-5
+    include ../../partials/product_recommendations
+
+  section.py-5
+    include ../../partials/service_benefits
+

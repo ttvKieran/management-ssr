@@ -24,6 +24,16 @@ block main
                             required
                             value=product.title
                         )
+                    .mb-3 
+                        p #{productCategory.parent_id}
+                        label(class='form-label' for="category") CATEGORY
+                        select(
+                            class="form-select"
+                            name="category_id"
+                            id="category"
+                        )
+                            option(disabled selected) SELECT PARENT
+                            +select-tree(recordTree, 1, productCategory.parent_id)
                     .mb-3
                         label(class='form-label' for="description") Description
                         textarea(

@@ -1,54 +1,20 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
+include ../../mixins/product-tab.pug
+include ../../mixins/section-blog.pug
 
 block main      
-  section.py-5
+  section
     .container-fluid
-      .row
-        .col-md-12
-          .bootstrap-tabs.product-tabs
-            .tabs-header.d-flex.justify-content-between.border-bottom.my-5
-              h3 Trending Products
-              nav
-                #nav-tab.nav.nav-tabs(role='tablist')
-                  a#nav-all-tab.nav-link.text-uppercase.fs-6.active(href='#' data-bs-toggle='tab' data-bs-target='#nav-all') All
-                  a#nav-fruits-tab.nav-link.text-uppercase.fs-6(href='#' data-bs-toggle='tab' data-bs-target='#nav-fruits') Fruits &amp; Veges
-                  a#nav-juices-tab.nav-link.text-uppercase.fs-6(href='#' data-bs-toggle='tab' data-bs-target='#nav-juices') Juices
-            #nav-tabContent.tab-content
-              #nav-all.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='nav-all-tab')
-                .product-grid.row.row-cols-1.row-cols-sm-2.row-cols-md-3.row-cols-lg-4.row-cols-xl-5
-                  each item in products 
-                    .col
-                      .product-item
-                        span.badge.bg-success.position-absolute.m-3 -#{item.discountPercentage}$
-                        a.btn-wishlist(href='#')
-                          svg(width='24' height='24')
-                            use(xlink:href='#heart')
-                        figure
-                          a(href=`/products/detail/${item.slug}` title='Product Title')
-                            img.tab-image(src=item.thumbnail, alt=item.title)
-                        h4 #{item.title}
-                        span.qty 1 Unit
-                        span.rating
-                          svg.text-primary(width='24' height='24')
-                            use(xlink:href='#star-solid')
-                          |  4.5
-                        span.price $#{item.price}
-                        .d-flex.align-items-center.justify-content-between
-                          .input-group.product-qty
-                            span.input-group-btn
-                              button.quantity-left-minus.btn.btn-danger.btn-number(type='button' data-type='minus')
-                                svg(width='16' height='16')
-                                  use(xlink:href='#minus')
-                            input#quantity.form-control.input-number(type='text' name='quantity' value='1')
-                            span.input-group-btn
-                              button.quantity-right-plus.btn.btn-success.btn-number(type='button' data-type='plus')
-                                svg(width='16' height='16')
-                                  use(xlink:href='#plus')
-                          a.nav-link(href='#')
-                            | Add to Cart 
-                            iconify-icon(icon='uil:shopping-cart')
-                  
-              #nav-fruits.tab-pane.fade(role='tabpanel' aria-labelledby='nav-fruits-tab')
-                
-              #nav-juices.tab-pane.fade(role='tabpanel' aria-labelledby='nav-juices-tab')
+      +product-tab(titlePage, products)
+  +section-blog("Our product blogs", blogs)
+
+  section.py-5.my-5
+    include ../../partials/hero-banner
+
+  section.py-5
+    include ../../partials/product_recommendations
+
+  section.py-5
+    include ../../partials/service_benefits
+      

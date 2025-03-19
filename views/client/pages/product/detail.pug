@@ -6,11 +6,12 @@ block main
         img#product-main-image(src=product.thumbnail alt='Product')
       .product-details
         h1.product-title #{product.title}
+        p.product-price Category: #{product.category.title}
         p.product-price Price: $#{product.price}
-        p.product-price Discount Percentage: #{product.price}%
+        p.product-price Discount Percentage: #{product.discountPercentage}%
         p.product-price Rating: #{product.rating}
         p.product-description
-          | Description: #{product.description}
+          | Description: !{product.description}
         p.product-description Stock: #{product.stock}
         a.add-to-cart(
           href="#"

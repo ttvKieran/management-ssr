@@ -1,5 +1,6 @@
 extends ../../layouts/default
 include ../../mixins/alert
+include ../../mixins/select-tree
 block main 
     +alert-success("5000")
     +alert-error("5000")
@@ -23,6 +24,15 @@ block main
                             placeholder="Name Product"
                             required
                         )
+                    .mb-3 
+                        label(class='form-label' for="category") CATEGORY
+                        select(
+                            class="form-select"
+                            name="category_id"
+                            id="category"
+                        )
+                            option(disabled selected) SELECT CATEGORY
+                            +select-tree(records, 1)
                     .mb-3
                         label(class='form-label' for="description") Description
                         textarea(
