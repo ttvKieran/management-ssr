@@ -1,0 +1,63 @@
+extend ../../layouts/default
+include ../../mixins/product-tab.pug
+include ../../mixins/product-carousel.pug
+include ../../mixins/category-carousel.pug
+include ../../mixins/section-blog.pug
+
+
+block main 
+  if(cart.products.length > 0)
+    // Cart Content
+    .container.my-5
+      h2.mb-4 #{titlePage}
+      // Cart Items
+      .card.mb-4
+        .card-body
+          .table-responsive
+            table.table.table-hover
+              thead.table-light
+                tr
+                  th.text-center.col-1 #
+                  th.text-center.col-2 Image
+                  th.text-center.col-2 Product
+                  th.text-center.col-2 Price
+                  th.text-center.col-2 Quantity
+                  th.text-center.col-2 Total Price
+                  th.text-center.col-1 Delete
+              tbody
+                each item in cart.products
+                  tr
+                    td.text-center #{index}
+                    td.text-center
+                      .image-container
+                        img(src=item.productDetail.thumbnail alt=item.productDetail.title)
+                    td.text-center #{item.productDetail.title}
+                    td.text-center #{item.productDetail.price}
+                    td.text-center
+                      .d-flex.align-items-center.justify-content-between
+                        input#quantity.form-control.input-number.text-center.w-75(
+                          type='number' 
+                          name='quantity' 
+                          min='1'
+                          value=item.quantity 
+                          product-id=item.product_id
+                        )
+                    td.text-center #{item.productDetail.totalPrice}
+                    td.text-center
+                      a.btn.btn-sm.btn-danger(href=`/cart/delete/${item.productDetail.id}`)
+                        i(class="fa-solid fa-trash")
+      // Cart Actions and Summary
+      .row.justify-content-end
+        .col-md-6
+          .card
+            .card-body
+              h5.card-title Total Order
+              ul.list-group.list-group-flush.mb-3
+                li.list-group-item.d-flex.justify-content-between
+                  span Total:
+                  strong #{cart.totalPrice}
+              button.btn.btn-success.w-100 Checkout
+  else 
+    h3 There are no products in the cart.
+  script(src="/client/js/cart.js") 
+
