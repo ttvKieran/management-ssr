@@ -42,6 +42,11 @@ database.connect();
 
 route(app);
 routeAdmin(app);
+app.get("*", (req, res) => {
+  res.render("client/pages/errors/404", {
+    titlePage: "404 Not Found"
+  })
+});
 
 app.listen(process.env.PORT, () => {
   console.log(`Example app listening on port ${process.env.PORT}`);

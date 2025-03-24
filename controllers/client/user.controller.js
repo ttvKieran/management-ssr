@@ -1,4 +1,5 @@
 const User = require('../../models/users.model.js');
+const Cart = require('../../models/carts.model.js');
 const bcrypt = require('bcrypt');
 const authMethodHelper = require('../../helpers/authMethod.js');
 const createTokenHelper = require('../../helpers/createToken.js');
@@ -31,6 +32,11 @@ module.exports.loginCheck = async (req, res) => {
                     secure: true,
                     sameSite: "Strict",
                 });
+                await Cart.updateOne({
+                    _id: req.cookies.cartId
+                }, {
+                    user_id: record.id
+                })
                 req.flash('success', `Account login successfully!`);
                 res.redirect(`/`);
                 return;
