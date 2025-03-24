@@ -1,0 +1,30 @@
+extends ../../layouts/auth
+include ../../mixins/alert
+block main 
+    +alert-success("5000")
+    +alert-error("5000")
+    h4.mb-2 Welcome! &#x1F44B;
+    p.mb-4 Please sign-in to your account and start the adventure
+    form#formAuthentication.mb-3(action=`/user/login` method='POST')
+        .mb-3
+            label.form-label(for='email') Email
+            input#email.form-control(type='text' name='email' placeholder='Enter your email' autofocus='')
+        .mb-3.form-password-toggle
+            .d-flex.justify-content-between
+                label.form-label(for='password') Password
+                a(href='/user/password/forgot')
+                    small Forgot Password?
+            .input-group.input-group-merge
+                input#password.form-control(type='password' name='password' placeholder='············' aria-describedby='password')
+                span.input-group-text.cursor-pointer
+                    i.bx.bx-hide
+        .mb-3
+            .form-check
+                input#remember-me.form-check-input(type='checkbox')
+                label.form-check-label(for='remember-me')  Remember Me 
+        .mb-3
+            button.btn.btn-primary.d-grid.w-100(type='submit') Sign in
+    p.text-center
+        span New on our platform?
+        a(href=`/user/register`)
+            span Create an account

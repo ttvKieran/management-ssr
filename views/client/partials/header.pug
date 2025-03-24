@@ -26,14 +26,22 @@ header
           span.fs-6.text-muted For Support?
           h5.mb-0 +980-34984089
         ul.d-flex.justify-content-end.list-unstyled.m-0
-          li
-            a.rounded-circle.bg-light.p-2.mx-1(href='#')
-              svg(width='24' height='24' viewbox='0 0 24 24')
-                use(xlink:href='#user')
-          li
-            a.rounded-circle.bg-light.p-2.mx-1(href='#')
-              svg(width='24' height='24' viewbox='0 0 24 24')
-                use(xlink:href='#heart')
+          if(user)
+            li
+              a.rounded-circle.bg-light.p-2.mx-1(href='#')
+                svg(width='24' height='24' viewbox='0 0 24 24')
+                  use(xlink:href='#user')
+            li
+              a.rounded-circle.bg-light.p-2.mx-1(href='#')
+                svg(width='24' height='24' viewbox='0 0 24 24')
+                  use(xlink:href='#heart')
+            li 
+              a.btn.btn-dark(href="/user/logout") Log out
+          else
+            li 
+              a.btn.btn-light(href="/user/login") Log in
+            li 
+              a.btn.btn-dark(href="/user/register") Sign up
           li.d-lg-none
             a.rounded-circle.bg-light.p-2.mx-1(href='#' data-bs-toggle='offcanvas' data-bs-target='#offcanvasCart' aria-controls='offcanvasCart')
               svg(width='24' height='24' viewbox='0 0 24 24')

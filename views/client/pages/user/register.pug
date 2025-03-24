@@ -1,0 +1,31 @@
+extends ../../layouts/auth
+include ../../mixins/alert
+block main 
+  +alert-success("5000")
+  +alert-error("5000")
+  h4.mb-2 Adventure starts here &#x1F680;
+  p.mb-4 Make your app management easy and fun!
+  form#formAuthentication.mb-3(action=`/user/register` method='POST')
+    .mb-3
+      label.form-label(for='fullname') Username
+      input#username.form-control(type='text' name='fullname' placeholder='Enter your username' autofocus='' required)
+    .mb-3
+      label.form-label(for='email') Email
+      input#email.form-control(type='text' name='email' placeholder='Enter your email')
+    .mb-3.form-password-toggle
+      label.form-label(for='password') Password
+      .input-group.input-group-merge
+        input#password.form-control(type='password' name='password' placeholder='············' aria-describedby='password' required)
+        span.input-group-text.cursor-pointer
+          i.bx.bx-hide
+    .mb-3
+      .form-check
+        input#terms-conditions.form-check-input(type='checkbox' name='terms' required)
+        label.form-check-label(for='terms-conditions')
+          | I agree to
+          a(href='javascript:void(0);') privacy policy &amp; terms
+    button.btn.btn-primary.d-grid.w-100(type="submit") Sign up
+  p.text-center
+    span Already have an account?
+    a(href=`/user/login`)
+      span Sign in instead

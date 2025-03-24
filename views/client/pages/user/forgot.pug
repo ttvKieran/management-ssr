@@ -1,0 +1,16 @@
+extends ../../layouts/auth
+include ../../mixins/alert
+block main 
+	+alert-success("5000")
+	+alert-error("5000")
+	h4.mb-2 Forgot Password? &#x1F512;
+	p.mb-4 Enter your email and we&apos;ll send you instructions to reset your password
+	form#formAuthentication.mb-3(action='/user/password/forgot' method='POST')
+		.mb-3
+			label.form-label(for='email') Email
+			input#email.form-control(type='text' name='email' placeholder='Enter your email' autofocus='')
+		button.btn.btn-primary.d-grid.w-100 Send Reset Link
+	.text-center
+		a.d-flex.align-items-center.justify-content-center(href='/user/login')
+			i.bx.bx-chevron-left.scaleX-n1-rtl.bx-sm
+			|                   Back to login
