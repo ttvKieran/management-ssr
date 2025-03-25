@@ -8,9 +8,18 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
 const moment = require('moment');
+const http = require('http');
+const {Server} = require("socket.io");
+
 
 const app = express();
 const port = 3000;
+
+//Socket IO
+const server = http.createServer(app);
+const io = new Server(server);
+global._io = io;
+//End Socket IO
 
 require('dotenv').config();
 
@@ -48,6 +57,6 @@ app.get("*", (req, res) => {
   })
 });
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   console.log(`Example app listening on port ${process.env.PORT}`);
 });

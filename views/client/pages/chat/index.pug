@@ -1,0 +1,33 @@
+extend ../../layouts/default
+include ../../mixins/product-tab.pug
+include ../../mixins/product-carousel.pug
+include ../../mixins/box-head.pug
+include ../../mixins/category-carousel.pug
+include ../../mixins/section-blog.pug
+
+block main 
+  .row 
+    .col-12 
+      .chat(my-id=user.id)
+        .inner-head 
+          .inner-avatar EV 
+          .inner-name Em 
+        .inner-body 
+          each chat in chats 
+            div(class=(chat.user_id == user.id ? "inner-outgoing" : "inner-incoming "))
+              if(chat.user_id != user.id)
+                .inner-name #{chat.infoUser.fullname}
+              .inner-content 
+                | #{chat.content}
+        .inner-foot 
+          form(
+            class="inner-form"
+            action=""
+          )
+            input(
+              type="text"
+              placeholder="Enter ..."
+              name="content"
+            )
+            button 
+              i.fa-solid.fa-paper-plane
