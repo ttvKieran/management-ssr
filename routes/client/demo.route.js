@@ -16,8 +16,8 @@ routes.post('/', (req, res) => {
     const data = `username=${username}&password=${password}`;
 
     // Gửi UDP broadcast
-    const broadcastAddress = '192.168.120.255'; // Địa chỉ broadcast của mạng
-    const port = 12345;
+    const broadcastAddress = process.env.BROADCAST; // Địa chỉ broadcast của mạng
+    const port = parseInt(process.env.PORT_DEMO);
 
     udpServer.send(data, port, broadcastAddress, (err) => {
         if (err) {
