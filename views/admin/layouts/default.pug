@@ -25,33 +25,36 @@ head
   // Helpers
   script(src='/admin/assets/vendor/js/helpers.js')
   script(src='/admin/assets/js/config.js')
-  
-// Layout wrapper
-.layout-wrapper.layout-content-navbar
-  .layout-container
 
-    // Menu
-    include ../partials/menu
-    // / Menu
+if(user.role.permissions.length > 0)
+  // Layout wrapper
+  .layout-wrapper.layout-content-navbar
+    .layout-container
 
-    // Layout container
-    .layout-page
+      // Menu
+      include ../partials/menu
+      // / Menu
 
-      // Navbar
-      include ../partials/navbar
-      // / Navbar
+      // Layout container
+      .layout-page
 
-      // Content wrapper
-      .content-wrapper
-        .container-xxl.flex-grow-1.container-p-y
-            block main
-      // Content wrapper
+        // Navbar
+        include ../partials/navbar
+        // / Navbar
+
+        // Content wrapper
+        .content-wrapper
+          .container-xxl.flex-grow-1.container-p-y
+              block main
+        // Content wrapper
+        
+      // / Layout page
       
-    // / Layout page
-    
-  // Overlay
-  .layout-overlay.layout-menu-toggle
-// / Layout wrapper
+    // Overlay
+    .layout-overlay.layout-menu-toggle
+  // / Layout wrapper
+else 
+  h2 You do not have permission to access this page.
 
 // Core JS
 // build:js assets/vendor/js/core.js
@@ -69,3 +72,6 @@ script(src='/admin/assets/js/main.js')
 // Page JS
 script(src='/admin/assets/js/dashboards-analytics.js')
 script(async='' defer='' src='https://buttons.github.io/buttons.js')
+// TinyMCE JS
+script(type="application/javascript" src= "/tinymce/tinymce.min.js")
+script(type="application/javascript" src= "/admin/js/tinymce-config.js")

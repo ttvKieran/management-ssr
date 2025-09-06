@@ -1,0 +1,86 @@
+extends ../../layouts/default
+include ../../mixins/filter-status
+include ../../mixins/search
+include ../../mixins/pagination
+include ../../mixins/form-change-multi
+include ../../mixins/alert
+include ../../mixins/form-sort-multi
+include ../../mixins/table-tree
+
+block main 
+
+    +alert-success("5000")
+    +alert-error("5000")
+    if(user.role.permissions.includes("product-category_view"))
+        //- Filter & Search
+        .card.mb-3 
+            h5.card-header Filters &amp; Search
+            .card-body
+                .row.align-items-center
+                    .col-6
+                        +filterStatus(filterStatus)
+                    .col-6
+                        +search(keyword)
+        //- End Filter & Search
+
+        //- Table list
+        .card
+            //- Change status multi
+            .row.m-0.p-sm-4.p-2
+                .col-md-5.col-4.p-0
+                    div
+                        +form-sort-multi()
+                    //- End Sort
+                if(user.role.permissions.includes("product-category_edit"))
+                    .col-5.p-0
+                        div
+                            +form-change-multi(`${prefixAdmin}/product-category/change-multi?_method=PATCH`)
+                if(user.role.permissions.includes("product-category_create"))
+                    .col-md-2.col-3.p-0.text-end
+                        a.btn.btn-primary.text-white.p-sm-8(
+                            type='button'
+                            href=`${prefixAdmin}/product-category/create`
+                        )
+                            span.tf-icons.bx.bx-message-alt-add.d-inline.me-1.p-0
+                            span Add
+            //- End Change status multi
+            .table-responsive.text-nowrap
+                table.table
+                    thead
+                        tr
+                            if(user.role.permissions.includes("product-category_edit"))
+                                th 
+                                    input(type="checkbox" name="check-box-all")
+                            th NO.
+                            th IMAGE
+                            th TITLE
+                            th POSITION
+                            th STATUS
+                            th ACTIONS
+                    tbody.table-border-bottom-0
+                        +table-tree(productCategory, 1, "product-category")
+        //- End Table list
+
+        //- Basic Pagination
+        +pagination(pagination)
+        //- End Basic Pagination
+
+        //- Form change status
+        form(
+            action
+            method="POST"
+            id="form-change-status"
+            path=`${prefixAdmin}/product-category/change-status`
+        )
+        //- End Form change status
+
+        //- Form delete
+        form(
+            action
+            method="POST"
+            id="form-delete"
+            path=`${prefixAdmin}/product-category/delete`
+        )
+        //- End Form delete
+    else 
+        h2 You do not have permission to access this page.

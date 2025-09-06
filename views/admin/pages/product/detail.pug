@@ -8,26 +8,36 @@ block main
         .col-md
             .card.mb-3
                 .row.g-0
-                    .col-md-4
-                        img.card-img.card-img-left(src=product.thumbnail alt='Card image')
-                    .col-md-8.align-content-center
+                    div(class="col-md-5 d-flex justify-content-center align-items-center")
+                        img.w-px-300.h-px-300.card-img.card-img-left(src=product.thumbnail alt='Card image')
+                    .col-md-7.align-content-center
                         .card-body
                             h3.card-title #{product.title}
-                            p.card-text.w-75 Description: #{product.description}
+                            p.card-text.w-75 Description: !{product.description}
                             p.card-text Price: $#{product.price}
                             p.card-text
                                 small.text-muted Discount Percentage: #{product.discountPercentage}%
                             p.card-text Position: #{product.position}
                             p.card-text Stock: #{product.stock}
-                            p.card-text.d-inline.me-2 Status: 
+                            p.card-text.d-inline.me-3 Status: 
                             if(product.status=="active")
                                 span(
-                                    class="badge bg-label-primary me-1 cursor-pointer" 
+                                    class="badge bg-label-primary me-1 cursor-pointer mb-3" 
                                 ) Active
                             else 
                                 span(
-                                    class="badge bg-label-warning me-1 cursor-pointer"
+                                    class="badge bg-label-warning me-1 cursor-pointer mb-3"
                                 ) Pending
+                            p.card-text Created By: #{user.fullname}, At: #{moment(product.createdBy.createdAt).format('DD/MM/YYYY h:mm:ss')}
+                            p.card-text.d-inline.me-3 Featured: 
+                            if(product.featured=="1")
+                                span(
+                                    class="badge bg-label-primary me-1 cursor-pointer" 
+                                ) Yes
+                            else 
+                                span(
+                                    class="badge bg-label-warning me-1 cursor-pointer"
+                                ) No
                             .mt-5 
                                 a(
                                     class="btn btn-primary"

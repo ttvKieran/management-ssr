@@ -1,0 +1,145 @@
+extends ../../layouts/default
+include ../../mixins/alert
+
+block main 
+    +alert-success("5000")
+    +alert-error("5000")
+    if(user.role.permissions.includes("role_permission"))
+        h1.mb-3 Permission 
+        .text-end 
+            button(
+                type="submit"
+                class="btn btn-primary mb-3"
+                button-submit
+            ) Update
+        table.table.table-hover-table-sm.table-striped.table-borderless.border-bottom(table-change-permission)
+            thead
+                tr 
+                    th Feature 
+                    each item in roles 
+                        th.text-center #{item.title}
+            tbody
+                tr(data-name="id")
+                    td.mt-3
+                        b Product 
+                    each item in roles
+                        td.mt-3 
+                            input.d-none(
+                                type="text"
+                                name="id"
+                                value=item.id
+                            )
+                tr(data-name="product_view")
+                    td View 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                tr(data-name="product_create")
+                    td Create 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                tr(data-name="product_edit")
+                    td Edit 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                tr(data-name="product_delete")
+                    td Delete 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                
+                tr(data-name="id")
+                    td.mt-3
+                        b Product Category 
+                tr(data-name="product-category_view")
+                    td View 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                tr(data-name="product-category_create")
+                    td Create 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                tr(data-name="product-category_edit")
+                    td Edit 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                tr(data-name="product-category_delete")
+                    td Delete 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                
+                tr(data-name="id")
+                    td.mt-3
+                        b Role 
+                tr(data-name="role_view")
+                    td View 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                tr(data-name="role_create")
+                    td Create 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                tr(data-name="role_edit")
+                    td Edit 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                tr(data-name="role_delete")
+                    td Delete 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                tr(data-name="role_permission")
+                    td Permission 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+
+                tr(data-name="id")
+                    td.mt-3
+                        b Account 
+                tr(data-name="account_view")
+                    td View 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                tr(data-name="account_create")
+                    td Create 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                tr(data-name="account_edit")
+                    td Edit 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+                tr(data-name="account_delete")
+                    td Delete 
+                    each item in roles
+                        td.text-center 
+                            input.form-check-input(type="checkbox")
+        form.d-none(
+            id="form-change-permission"
+            method="POST"
+            action=`${prefixAdmin}/roles/permission?_method=PATCH`
+        )
+            .form-group 
+                input(
+                    type="text"
+                    class="form-control"
+                    name="permissions"
+                    value=roles
+                )
+        script(src="/admin/js/role.js") 
+    else 
+        h2 You do not have permission to access this page.
+
+

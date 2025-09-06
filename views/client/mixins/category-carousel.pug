@@ -1,0 +1,32 @@
+mixin category-carousel(title, items)
+  .row
+    .col-md-12
+      .section-header.d-flex.flex-wrap.justify-content-between.mb-5
+        h2.section-title #{title}
+        .d-flex.align-items-center
+          a.btn-link.text-decoration-none(href='#') View All &rarr;
+          .swiper-buttons
+            button.swiper-prev.category-carousel-prev.btn.btn-yellow &#x276E;
+            button.swiper-next.category-carousel-next.btn.btn-yellow &#x276F;
+  .row
+    .col-md-12
+      .category-carousel.swiper
+        .swiper-wrapper
+          a.nav-link.category-item.swiper-slide(href='index.html')
+            img(src='/client/images/icon-vegetables-broccoli.png' alt='Category Thumbnail')
+            h3.category-title Fruits &amp; Veges
+          a.nav-link.category-item.swiper-slide(href='index.html')
+            img(src='/client/images/icon-bread-baguette.png' alt='Category Thumbnail')
+            h3.category-title Breads &amp; Sweets
+          a.nav-link.category-item.swiper-slide(href='index.html')
+            img(src='/client/images/icon-soft-drinks-bottle.png' alt='Category Thumbnail')
+            h3.category-title Fruits &amp; Veges
+          a.nav-link.category-item.swiper-slide(href='index.html')
+            img(src='/client/images/icon-wine-glass-bottle.png' alt='Category Thumbnail')
+            h3.category-title Fruits &amp; Veges
+          a.nav-link.category-item.swiper-slide(href='index.html')
+            img(src='/client/images/icon-animal-products-drumsticks.png' alt='Category Thumbnail')
+            h3.category-title Fruits &amp; Veges
+          a.nav-link.category-item.swiper-slide(href='index.html')
+            img(src='/client/images/icon-bread-herb-flour.png' alt='Category Thumbnail')
+            h3.category-title Fruits &amp; Veges

@@ -1,0 +1,44 @@
+extends ../../layouts/default
+include ../../mixins/alert
+include ../../mixins/select-tree
+block main 
+    +alert-success("5000")
+    +alert-error("5000")
+    if(user.role.permissions.includes("role_create"))
+        .card.mb-4 
+            h3.card-header Add New Role
+            .card-body 
+                form(
+                    action=`${prefixAdmin}/roles/create`
+                    id="form-create"
+                    method="POST"
+                )
+                    .mb-3 
+                        label(class='form-label' for="title") Title
+                        input(
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            name="title"
+                            placeholder="Name Role"
+                            required
+                        )
+                            
+                    .mb-3
+                        label(class='form-label' for="description") Description
+                        textarea(
+                            type="text"
+                            class="form-control"
+                            id="description"
+                            name="description"
+                            rows="5"
+                            required
+                        )
+                    .mb-3 
+                        button(
+                            type="submit"
+                            class="btn btn-primary"
+                        ) Create
+    else 
+        h2 You do not have permission to access this page.   
+        

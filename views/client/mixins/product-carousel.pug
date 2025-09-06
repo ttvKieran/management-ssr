@@ -1,0 +1,44 @@
+mixin product-carousel(title, items)
+  .row
+    .col-md-12
+      .section-header.d-flex.flex-wrap.justify-content-between.my-5
+        h2.section-title #{title}
+        .d-flex.align-items-center
+          a.btn-link.text-decoration-none(href='#') View All &rarr;
+          .swiper-buttons
+            button.swiper-prev.products-carousel-prev.btn.btn-primary &#x276E;
+            button.swiper-next.products-carousel-next.btn.btn-primary &#x276F;
+  .row
+    .col-md-12
+      .products-carousel.swiper
+        .swiper-wrapper
+          each item in items 
+            .product-item.swiper-slide
+              span.badge.bg-success.position-absolute.m-3 -#{item.discountPercentage}%
+              a.btn-wishlist(href='#')
+                svg(width='24' height='24')
+                  use(xlink:href='#heart')
+              figure
+                a(href='index.html' title='Product Title')
+                  img.tab-image(src=item.thumbnail)
+              h3 #{item.title}
+              span.qty 1 Unit
+              span.rating
+                svg.text-primary(width='24' height='24')
+                  use(xlink:href='#star-solid')
+                |  4.5
+              span.price $#{item.price}
+              .d-flex.align-items-center.justify-content-between
+                .input-group.product-qty
+                  span.input-group-btn
+                    button.quantity-left-minus.btn.btn-danger.btn-number(type='button' data-type='minus')
+                      svg(width='16' height='16')
+                        use(xlink:href='#minus')
+                  input#quantity.form-control.input-number(type='text' name='quantity' value='1')
+                  span.input-group-btn
+                    button.quantity-right-plus.btn.btn-success.btn-number(type='button' data-type='plus')
+                      svg(width='16' height='16')
+                        use(xlink:href='#plus')
+                a.nav-link(href='#')
+                  | Add to Cart 
+                  iconify-icon(icon='uil:shopping-cart')

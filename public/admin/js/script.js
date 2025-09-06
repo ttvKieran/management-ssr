@@ -6,8 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
         link.parentNode.classList.remove("active");
         if (link.getAttribute("href") == currentPath) {
             link.parentNode.classList.add("active");
+            let parentLink = link.closest("li.menu-item.root-menu");
+            if(parentLink){
+                parentLink.classList.add("active");
+                parentLink.classList.add("open");
+            }
         }
-
     });
 });
 //End Nav
@@ -30,11 +34,11 @@ if (buttonStatus.length > 0) {
 }
 //End Filter Status
 
-//Search Product
-const formSearchProduct = document.querySelector("#form-search");
-if (formSearchProduct) {
+//Search
+const formSearch = document.querySelector("#form-search");
+if (formSearch) {
     const url = new URL(window.location.href);
-    formSearchProduct.addEventListener("submit", (e) => {
+    formSearch.addEventListener("submit", (e) => {
         e.preventDefault();
         const keyword = e.target.elements.keyword.value;
         if (keyword) {
@@ -45,7 +49,7 @@ if (formSearchProduct) {
         window.location.href = url;
     });
 }
-//End Search Product
+//End Search
 
 //Pagination
 const buttonPagination = document.querySelectorAll("[button-pagination]");
@@ -62,7 +66,7 @@ if (buttonPagination.length > 0) {
 }
 //End Pagination
 
-// Change Status Product
+// Change Status
 const buttonChangeStatus = document.querySelectorAll("[button-change-status]");
 if (buttonChangeStatus.length > 0) {
     const formChangeStatus = document.querySelector("#form-change-status");
@@ -76,9 +80,9 @@ if (buttonChangeStatus.length > 0) {
         });
     });
 }
-// End Change Status Product
+// End Change Status
 
-// Change Multi Product
+// Change Multi
 // CheckBox
 const checkBoxAll = document.querySelector("input[name='check-box-all']");
 const checkBoxItems = document.querySelectorAll("input[name='check-box-item']");
@@ -142,9 +146,9 @@ if (formChangeMulti) {
     });
 }
 // End Form Change Multi 
-// End Change Multi Product
+// End Change Multi
 
-// Form Delete Product
+// Form Delete
 const buttonDelete = document.querySelectorAll("[button-delete]");
 if (buttonDelete.length > 0) {
     const formDelete = document.querySelector("#form-delete");
@@ -156,7 +160,7 @@ if (buttonDelete.length > 0) {
         });
     });
 }
-// End Form Delete Product
+// End Form Delete
 
 //Show Alert
 const showAlert = document.querySelector("[show-alert]");
@@ -175,9 +179,18 @@ if(inputUploadImage){
         const [file] = e.target.files;
         if(file){
             const imagePreviewUpload = document.querySelector("[image-preview-upload]");
+            imagePreviewUpload.classList.remove("d-none");
+            imagePreviewUpload.classList.add("d-block");
             imagePreviewUpload.src = URL.createObjectURL(file);
         }
     }); 
+}
+const buttonResetPreviewImage = document.querySelector("span[button-reset-preiview-image]");
+if(buttonResetPreviewImage){
+    buttonResetPreviewImage.addEventListener("click", () => {
+        const avatar = document.getElementById("uploadedAvatar");
+        avatar.src = buttonResetPreviewImage.getAttribute("user-avatar");
+    });
 }
   /* End Image Preview */
 

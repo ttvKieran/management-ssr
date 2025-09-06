@@ -1,0 +1,37 @@
+extend ../../layouts/default
+include ../../mixins/alert
+block main 
+    +alert-success("5000")
+    +alert-error("5000")
+    .card.mb-4
+      // Account
+      form#formAccountSettings(method='POST' action=`${prefixAdmin}/my-profile/edit?_method=PATCH` enctype="multipart/form-data")
+        .card-body
+          .d-flex.align-items-start.align-items-sm-center.gap-4
+            img#uploadedAvatar.d-block.rounded(src=user.avatar alt='user-avatar' height='100' width='100' image-preview-upload)
+            .button-wrapper
+              label.btn.btn-primary.me-2.mb-4(for='upload' tabindex='0')
+                span.d-none.d-sm-block Upload new photo
+                i.bx.bx-upload.d-block.d-sm-none
+                input#upload.account-file-input(type='file' hidden='' accept='image/*' input-upload-image name="avatar")
+              button.btn.btn-outline-secondary.account-image-reset.mb-4(type='button')
+                i.bx.bx-reset.d-block.d-sm-none
+                span.d-none.d-sm-block(button-reset-preiview-image user-avatar=user.avatar) Reset
+              p.text-muted.mb-0 Allowed JPG, GIF or PNG. Max size of 800K
+        hr.my-0
+        .card-body
+          .row
+            .mb-3.col-md-6
+              label.form-label(for='fullname') Full Name
+              input#firstName.form-control(type='text' name='fullname' value=user.fullname)
+            .mb-3.col-md-6
+              label.form-label(for='email') E-mail
+              input#email.form-control(type='text' name='email' value=user.email placeholder='abc@example.com')
+            .mb-3.col-md-6
+              label.form-label(for='phonenumber') Phone
+              .input-group.input-group-merge
+                span.input-group-text VN (+84)
+                input#phoneNumber.form-control(type='text' name="phonenumber" value=user.phonenumber placeholder='084')
+          .mt-2
+            button.btn.btn-primary.me-2(type="submit") Save changes
+        // /Account

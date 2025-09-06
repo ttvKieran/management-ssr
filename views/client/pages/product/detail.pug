@@ -1,17 +1,30 @@
 extends ../../layouts/default.pug
 block main 
-  .product-detail 
-    .product-container
-      .product-image
-        img#product-main-image(src=product.thumbnail alt='Product')
-      .product-details
-        h1.product-title #{product.title}
-        p.product-price Price: $#{product.price}
-        p.product-price Discount Percentage: #{product.price}%
-        p.product-price Rating: #{product.rating}
-        p.product-description
-          | Description: #{product.description}
-        p.product-description Stock: #{product.stock}
-        a.add-to-cart(
-          href="#"
-        ) Add to cart
+  .container-fluid
+    .row
+      .col-6.text-center
+        img.w-75.h-auto(src=product.thumbnail alt='Product')
+      .col-6
+        h1 #{product.title}
+        p Category: #{product.category.title}
+        p Price: $#{product.price}
+        p Discount Percentage: #{product.discountPercentage}%
+        p Rating: #{product.rating}
+        p
+          | Description: !{product.description}
+        p Stock: #{product.stock}
+        form(action=`/cart/add/${product.id}` method='POST')
+          .input-group.product-qty.w-25.mb-3
+            span.input-group-btn
+              button.quantity-left-minus.btn.btn-danger.btn-number(type='button' data-type='minus')
+                svg(width='16' height='16')
+                  use(xlink:href='#minus')
+            input#quantity.form-control.input-number.text-center(type='text' name='quantity' value='1' min='1')
+            span.input-group-btn
+              button.quantity-right-plus.btn.btn-success.btn-number(type='button' data-type='plus')
+                svg(width='16' height='16')
+                  use(xlink:href='#plus')
+          button.btn.btn-dark(
+            type="submit"
+            href="#"
+          ) Add to cart 

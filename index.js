@@ -6,9 +6,20 @@ const bodyParser = require('body-parser');
 const flash = require('express-flash'); 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const path = require('path');
+const moment = require('moment');
+const http = require('http');
+const {Server} = require("socket.io");
+
 
 const app = express();
 const port = 3000;
+
+//Socket IO
+const server = http.createServer(app);
+const io = new Server(server);
+global._io = io;
+//End Socket IO
 
 require('dotenv').config();
 
@@ -21,6 +32,8 @@ app.use(methodOverride('_method'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+
 // Express flash
 app.use(cookieParser('MUAXUANDENBINHYEN'));
 app.use(session({ cookie: { maxAge: 60000 }}));
@@ -32,12 +45,18 @@ app.set('view engine', 'pug');
 
 //Local variable
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 
 database.connect();
 
 route(app);
 routeAdmin(app);
+app.get("*", (req, res) => {
+  res.render("client/pages/errors/404", {
+    titlePage: "404 Not Found"
+  })
+});
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   console.log(`Example app listening on port ${process.env.PORT}`);
 });

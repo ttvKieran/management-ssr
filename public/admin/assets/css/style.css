@@ -49,3 +49,18 @@
     display: none;
   }
   /* End Image Preview */
+
+  @media (max-width: 768px) { 
+    .form-select{
+      width: 80%;
+    }
+  }
+  
+  @media (max-width: 576px) { 
+    .fs-sm-10 {
+      font-size: 10px !important;
+    }
+    .p-sm-8{
+      padding: 8px !important;
+    }
+  }

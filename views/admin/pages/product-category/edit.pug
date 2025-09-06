@@ -1,0 +1,104 @@
+extends ../../layouts/default
+include ../../mixins/alert
+include ../../mixins/select-tree
+block main 
+    +alert-success("5000")
+    +alert-error("5000")
+    if(user.role.permissions.includes("product-category_edit"))
+        .card.mb-4 
+            h3.card-header Edit Category
+            .card-body 
+                form(
+                    action=`${prefixAdmin}/product-category/edit/${productCategory.id}?_method=PATCH`
+                    id="form-edit-category"
+                    method="POST"
+                    enctype="multipart/form-data"
+                )
+                    .mb-3 
+                        label(class='form-label' for="title") Title
+                        input(
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            name="title"
+                            placeholder="Name Category"
+                            required
+                            value=productCategory.title
+                        )
+                    .mb-3 
+                        p #{productCategory.parent_id}
+                        label(class='form-label' for="parent-category") PARENT CATEGORY
+                        select(
+                            class="form-select"
+                            name="parent_id"
+                            id="parent-category"
+                        )
+                            option(disabled selected) SELECT PARENT
+                            +select-tree(recordTree, 1, productCategory.parent_id)
+                            
+                    .mb-3
+                        label(class='form-label' for="description") Description
+                        textarea(
+                            type="text"
+                            class="form-control textarea-tinymce"
+                            id="description"
+                            name="description"
+                            rows="5"
+                        ) !{productCategory.description}
+                    .mb-3
+                        label(class="form-label" for="thumbnail") Image
+                        input(
+                            type="file" 
+                            class="form-control"
+                            name="thumbnail"
+                            id="thumbnail"
+                            accept="image/*"
+                            input-upload-image 
+                        )
+                        img(
+                            class="image-preview"
+                            image-preview-upload
+                            src=productCategory.thumbnail
+                        )
+                    .mb-3 
+                        label(class="form-label" for="position") Position
+                        input(
+                            type="number"
+                            class="form-control"
+                            id="position"
+                            name="position"
+                            placeholder="Auto increase"
+                            min="1"
+                            value=productCategory.position
+                        )
+                    .mb-3.col-md 
+                        .d-block Status 
+                        .form-check.form-check-inline.mt-3 
+                            input(
+                                type="radio" 
+                                class="form-check-input" 
+                                name="status" 
+                                value="active"
+                                id="active"
+                                checked=(productCategory.status == "active" ? true : false)
+                            ) 
+                            label(class="form-check-label" for="active") Action
+                        .form-check.form-check-inline.mt-3 
+                            input(
+                                type="radio" 
+                                class="form-check-input" 
+                                name="status" 
+                                value="inactive"
+                                id="inactive"
+                                checked=(productCategory.status == "inactive" ? true : false)
+                            ) 
+                            label(class="form-check-label" for="inactive") Pending
+                    .mb-3 
+                        button(
+                            type="submit"
+                            class="btn btn-primary"
+                        ) Edit
+    else 
+        h2 You do not have permission to access this page.
+        
+        

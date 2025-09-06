@@ -1,4 +1,5 @@
-const Product = require('../../models/product.model');
+const Product = require('../../models/products.model');
+const ProductCategory = require('../../models/product-category.model');
 
 module.exports.index = async (req, res) => {
     const products = await Product.find({
@@ -10,14 +11,8 @@ module.exports.index = async (req, res) => {
         return item;
     })
     res.render("client/pages/product/index", {
-        titlePage: "Trang danh sách sản phẩm",
+        titlePage: "Product List",
         products: newProducts
-    });
-}
-
-module.exports.create = (req, res) => {
-    res.render("client/pages/product/productCreate", {
-        titlePage: "Trang tạo mới sản phẩm"
     });
 }
 
@@ -27,8 +22,35 @@ module.exports.detail = async (req, res) => {
         deleted: false,
         slug: req.params.slug
     });
+    const category = await ProductCategory.findOne({
+        status: "active",
+        deleted: false,
+        _id: product.category_id
+    });
+    product.category = category;
     res.render("client/pages/product/detail", {
         titlePage: "Detail Product",
         product: product
     });
+}
+
+module.exports.category = async (req, res) => {
+    try {
+        const category = await ProductCategory.findOne({
+            status: "active",
+            deleted: false,
+            slug: req.params.slugCategory
+        });
+        const products = await Product.find({
+            status: "active",
+            deleted: false,
+            category_id: category._id
+        });
+        res.render("client/pages/product/index", {
+            titlePage: category.title,
+            products: products
+        });
+    } catch (error) {
+        res.redirect("/");
+    }
 }

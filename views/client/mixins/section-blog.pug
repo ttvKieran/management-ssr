@@ -1,0 +1,72 @@
+mixin section-blog(title, items)
+  section#latest-blog
+    .container-fluid
+      .row
+        .section-header.d-flex.align-items-center.justify-content-between.my-5
+          h2.section-title #{title}
+          .btn-wrap.align-right
+            a.d-flex.align-items-center.nav-link(href='#')
+              | Read All Articles 
+              svg(width='24' height='24')
+                use(xlink:href='#arrow-right')
+      .row
+        .col-md-4
+          article.post-item.card.border-0.shadow-sm.p-3
+            .image-holder.zoom-effect
+              a(href='#')
+                img.card-img-top(src='/client/images/post-thumb-1.jpg' alt='post')
+            .card-body
+              .post-meta.d-flex.text-uppercase.gap-3.my-2.align-items-center
+                .meta-date
+                  svg(width='16' height='16')
+                    use(xlink:href='#calendar')
+                  | 22 Aug 2021
+                .meta-categories
+                  svg(width='16' height='16')
+                    use(xlink:href='#category')
+                  | tips &amp; tricks
+              .post-header
+                h3.post-title
+                  a.text-decoration-none(href='#') Top 10 casual look ideas to dress up your kids
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipi elit. Aliquet eleifend viverra enim tincidunt donec quam. A in arcu, hendrerit neque dolor morbi...
+        .col-md-4
+          article.post-item.card.border-0.shadow-sm.p-3
+            .image-holder.zoom-effect
+              a(href='#')
+                img.card-img-top(src='/client/images/post-thumb-2.jpg' alt='post')
+            .card-body
+              .post-meta.d-flex.text-uppercase.gap-3.my-2.align-items-center
+                .meta-date
+                  svg(width='16' height='16')
+                    use(xlink:href='#calendar')
+                  | 25 Aug 2021
+                .meta-categories
+                  svg(width='16' height='16')
+                    use(xlink:href='#category')
+                  | trending
+              .post-header
+                h3.post-title
+                  a.text-decoration-none(href='#') Latest trends of wearing street wears supremely
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipi elit. Aliquet eleifend viverra enim tincidunt donec quam. A in arcu, hendrerit neque dolor morbi...
+        .col-md-4
+          article.post-item.card.border-0.shadow-sm.p-3
+            .image-holder.zoom-effect
+              a(href='#')
+                img.card-img-top(src='/client/images/post-thumb-3.jpg' alt='post')
+            .card-body
+              .post-meta.d-flex.text-uppercase.gap-3.my-2.align-items-center
+                .meta-date
+                  svg(width='16' height='16')
+                    use(xlink:href='#calendar')
+                  | 28 Aug 2021
+                .meta-categories
+                  svg(width='16' height='16')
+                    use(xlink:href='#category')
+                  | inspiration
+              .post-header
+                h3.post-title
+                  a.text-decoration-none(href='#') 10 Different Types of comfortable clothes ideas for women
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipi elit. Aliquet eleifend viverra enim tincidunt donec quam. A in arcu, hendrerit neque dolor morbi...
