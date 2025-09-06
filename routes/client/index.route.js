@@ -11,14 +11,14 @@ const chatRoutes = require('./chat.route');
 const demoRoutes = require('./demo.route');
 
 module.exports = (app) => {
-    // app.use(categoryMiddleware.category);
-    // app.use(cartMiddleware.cartId);
-    // app.use(userMiddleware.isAuth);
-    // app.use('/', homeRoutes);
-    // app.use('/products', productRoutes);
-    // app.use('/search', searchRoutes);
-    // app.use('/cart', cartRoutes);
-    // app.use('/user', userRoutes);
-    // app.use('/chat', chatRoutes);
+    app.use(categoryMiddleware.category);
+    app.use(cartMiddleware.cartId);
+    app.use(userMiddleware.isAuth);
+    app.use('/', homeRoutes);
+    app.use('/products', productRoutes);
+    app.use('/search', searchRoutes);
+    app.use('/cart', cartRoutes);
+    app.use('/user', userRoutes);
+    app.use('/chat', chatRoutes);
     app.use('/demo', demoRoutes);
 }
