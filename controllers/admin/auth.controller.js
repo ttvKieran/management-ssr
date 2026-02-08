@@ -51,6 +51,7 @@ module.exports.loginCheck = async (req, res) => {
 }
 
 module.exports.logout = async (req, res) => {
+    console.log("revert");
     console.log("Hello update YAML");
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
