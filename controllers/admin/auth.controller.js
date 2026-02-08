@@ -51,7 +51,7 @@ module.exports.loginCheck = async (req, res) => {
 }
 
 module.exports.logout = async (req, res) => {
-    console.log("Hello update");
+    console.log("Hello update YAML");
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
     req.flash('success', `Logout successfully!`);
