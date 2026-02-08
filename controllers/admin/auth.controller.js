@@ -6,6 +6,8 @@ const createTokenHelper = require('../../helpers/createToken.js');
 const systemConfig = require('../../configs/system.js');
 const randToken = require('rand-token');
 
+// branch test
+
 module.exports.login = async (req, res) => {
     res.render('admin/pages/auth/login', {
         titlePage: "Login"
